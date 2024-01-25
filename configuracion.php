@@ -129,11 +129,11 @@
 <hr>
 <div class="container formularios">
   <!-- Alta de usuarios -->
-  <button type="button" class="custom-btn"><a href="usuarios.php">Alta de usuarios</a></button>
+  <button type="button" class="custom-btn"><a href="usuarios.php"><strong>Alta de usuarios</strong></a></button>
   <!-- Modificaciones de usuarios -->
-  <button type="button" class="custom-btn"><a href="modificacion.php">Modificacion de usuarios</a></button>
+  <button type="button" class="custom-btn"><a href="modificacion.php"><strong>Modificacion de usuarios</strong></a></button>
   <!-- Baja de usuarios -->
-  <button type="button" class="custom-btn"><a href="#">Baja de usuarios</a></button>
+  <button type="button" class="custom-btn"><a href="#"><strong>Baja de usuarios</strong></a></button>
 </div>
 <hr>
 </body>
