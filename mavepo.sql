@@ -41,6 +41,32 @@ INSERT INTO `roles` (`id_rol`, `nombre_rol`) VALUES
 (2, 'Lectura'),
 (3, 'Usuario Regular');
 
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `solicitudes`
+--
+
+CREATE TABLE `solicitudes` (
+  `id` int(99) NOT NULL,
+  `nombreSolicitud` varchar(99) NOT NULL,
+  `responsable` varchar(99) NOT NULL,
+  `fecha` varchar(99) NOT NULL,
+  `estado` varchar(50) NOT NULL,
+  `presupuesto` int(99) NOT NULL,
+  `prioridad` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `solicitudes`
+--
+
+INSERT INTO `solicitudes` (`id`, `nombreSolicitud`, `responsable`, `fecha`, `estado`, `presupuesto`, `prioridad`) VALUES
+(1, 'Cotización pc', 'Luis', '25/01/2024', 'En curso', 1200, 'Media'),
+(2, 'Papeleria', 'Juan', '25/01/2024', 'Detenido', 5000, 'Alta'),
+(3, 'piezas', 'Juan', '24/01/2024', 'Listo', 500, 'Baja');
+
 -- --------------------------------------------------------
 
 --
