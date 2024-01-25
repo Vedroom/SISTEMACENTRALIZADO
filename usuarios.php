@@ -69,17 +69,27 @@
             <div class="sidebar-sticky pt-3">
               <ul class="nav flex-column">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#">
+                  <a class="nav-link active" href="menu.php">
                     <span data-feather="home"></span>
                     Ventas <span class="sr-only">(current)</span>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="dashboard.php">
                     <span data-feather="users"></span>
                     Dashboard
                   </a>
                 </li>
+                <?php
+                if ($_SESSION["id_rol"] == 1){
+                  echo '<li class="nav-item">
+                                  <a class="nav-link" href="configuracion.php">
+                                      <span data-feather="users"></span>
+                                      Configuracion
+                                  </a>
+                              </li>';
+                }
+                ?>
                 <li class="nav-item boton" >
                 <?php
                    // Botón de salir
@@ -128,7 +138,7 @@
               <option value="Autlan">Autlan</option>
             </select><br>
             <!----------------------------Roles------------------------------------------------>
-            <label for="id_rol">ID Rol:</label>
+            <label for="id_rol">Rol:</label>
             <select id="id_rol" name="id_rol">
               <option value="1">Administrador</option>
               <option value="2">Lectura</option>

@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Consultar la base de datos para verificar el usuario y la contraseña
-    $consulta = "SELECT id, nombre, sucursal FROM usuarios WHERE usuario = ? AND contrasena = ?";
+    $consulta = "SELECT id, nombre, sucursal, id_rol FROM usuarios WHERE usuario = ? AND contrasena = ?";
     $sentencia = $conexion->prepare($consulta);
     $sentencia->bind_param("ss", $usuario, $contrasena);
     $sentencia->execute();
@@ -26,13 +26,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar si se encontró un usuario con los datos proporcionados
     if ($sentencia->num_rows == 1) {
         // Iniciar la sesión y almacenar datos del usuario
-        $sentencia->bind_result($id, $nombre, $sucursal);
+        $sentencia->bind_result($id, $nombre, $sucursal, $id_rol);
         $sentencia->fetch();
 
         $_SESSION["id"] = $id;
         $_SESSION["usuario"] = $usuario;
         $_SESSION["nombre"] = $nombre;
         $_SESSION["sucursal"] = $sucursal;
+        $_SESSION["id_rol"] = $id_rol;
 
         // Redireccionar a la página de menu principal después del inicio de sesión
         header("Location: menu.php");

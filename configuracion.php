@@ -28,6 +28,38 @@
         .boton a{
           text-decoration: none;
         }
+        .formularios{
+             padding-left: 332px;
+            }
+        
+        input[type=text] {
+          width: 100%;
+          padding: 12px 20px;
+          margin: 8px 0;
+          box-sizing: border-box;
+        }
+        .custom-btn {
+      background-color: rgb(175, 30, 45); /* Color de fondo */
+      border: none; /* Sin borde */
+      color: white; /* Color del texto */
+      padding: 10px 20px; /* Espaciado interno */
+      text-align: center; /* Alineación del texto */
+      text-decoration: none; /* Sin subrayado */
+      display: inline-block;
+      font-size: 16px; /* Tamaño del texto */
+      margin: 4px 35px; /* Margen externo */
+      transition-duration: 0.4s; /* Duración de la transición */
+      cursor: pointer; /* Cursor al pasar sobre el botón */
+    }
+
+    .custom-btn:hover {
+      background-color: black; /* Cambio de color al pasar el cursor */
+      color: white; /* Cambio de color del texto */
+    }
+    .custom-btn a{
+        text-decoration: none;
+        color:aliceblue;
+    }
       </style>
 </head>
 <body>
@@ -92,10 +124,17 @@
         </div>
     </div>
 <!---------------------------Navegador vertical-------------------------------------------->
-<!----------------------------------Formulario de las ventas--------------------------------------------->
-<form action="POST">
-
-</form>
-<!----------------------------------Formulario--------------------------------------------->
+<!-----------------------------Configuracion------------------------------------------>
+<h2 style="text-align: center;" class="formularios"><strong>Usuarios</strong></h2>
+<hr>
+<div class="container formularios">
+  <!-- Alta de usuarios -->
+  <button type="button" class="custom-btn"><a href="usuarios.php">Alta de usuarios</a></button>
+  <!-- Modificaciones de usuarios -->
+  <button type="button" class="custom-btn"><a href="modificacion.php">Modificacion de usuarios</a></button>
+  <!-- Baja de usuarios -->
+  <button type="button" class="custom-btn"><a href="#">Baja de usuarios</a></button>
+</div>
+<hr>
 </body>
 </html>

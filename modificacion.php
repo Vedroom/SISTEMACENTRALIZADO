@@ -28,6 +28,16 @@
         .boton a{
           text-decoration: none;
         }
+        .formularios{
+             padding-left: 332px;
+            }
+        
+        input[type=text] {
+          width: 100%;
+          padding: 12px 20px;
+          margin: 8px 0;
+          box-sizing: border-box;
+        }
       </style>
 </head>
 <body>
@@ -92,10 +102,7 @@
         </div>
     </div>
 <!---------------------------Navegador vertical-------------------------------------------->
-<!----------------------------------Formulario de las ventas--------------------------------------------->
-<form action="POST">
+<!-----------------------------modficacion de usuarios de usuarios------------------------------------------>
 
-</form>
-<!----------------------------------Formulario--------------------------------------------->
 </body>
 </html>
