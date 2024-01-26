@@ -28,8 +28,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
     integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
     crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <!----------------------Bootstrap--------------------------------------->
-  <link rel="stylesheet" href="css/styledasg.css">
+  <link rel="stylesheet" type="text/css" href="css/styledasg.css">
   <style>
     .boton {
       padding-left: 12px;
@@ -71,31 +74,66 @@
   <!---------------------------Navegador vertical-------------------------------------------->
   <div class="container-fluid">
     <div class="row">
-      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
         <div class="sidebar-sticky pt-3">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="#">
-                <span data-feather="home"></span>
-                Ventas <span class="sr-only">(current)</span>
+              <a class="nav-link" href="#" id="ventasToggle">
+                <span data-feather="users"></span>
+                Ventas
               </a>
+              <ul class="list-group collapse fade" id="ventasCollapse">
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="#">Item 1</a>
+                </li>
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>
+                </li>
+              </ul>
             </li>
+
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="#" id="dashboardToggle">
                 <span data-feather="users"></span>
                 Dashboard
               </a>
+              <ul class="list-group collapse fade" id="dashboardCollapse">
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="#">Item 1</a>
+                </li>
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>
+                </li>
+              </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="#" id="solicitudesToggle">
                 <span data-feather="users"></span>
                 Solicitudes
               </a>
+              <ul class="list-group collapse fade" id="solicitudesCollapse">
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="solicitudes.php">Ver solicitudes</a>
+                </li>
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="creaSolicitud.php">Crear solicitud</a>
+                </li>
+              </ul>
             </li>
+            <?php
+            if ($_SESSION["id_rol"] == 1) {
+              echo '<li class="nav-item">
+                                  <a class="nav-link" href="configuracion.php">
+                                      <span data-feather="users"></span>
+                                      Configuracion
+                                  </a>
+                              </li>';
+            }
+            ?>
             <li class="nav-item boton">
               <?php
               // Botón de salir
-              echo '<button class="btn-primary btn"><a href="logout.php" style="color: aliceblue;  ">Salir</a></button>';
+              echo '<button class="btn-primary btn"><a href="logout.php" style="color: aliceblue;">Salir</a></button>';
               ?>
             </li>
           </ul>
@@ -103,6 +141,21 @@
       </nav>
     </div>
   </div>
+
+  <script>
+    //Desplegar opciones respectivas
+    $(document).ready(function () {
+      $('#ventasToggle').click(function () {
+        $('#ventasCollapse').toggleClass('show');
+      });
+      $('#dashboardToggle').click(function () {
+        $('#dashboardCollapse').toggleClass('show');
+      });
+      $('#solicitudesToggle').click(function () {
+        $('#solicitudesCollapse').toggleClass('show');
+      });
+    });
+  </script>
   <!---------------------------Navegador vertical-------------------------------------------->
   <!-----------------------------Contenido principal------------------------------->
 

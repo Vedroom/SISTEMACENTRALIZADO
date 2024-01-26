@@ -52,46 +52,92 @@
             </li>
         </ul>
     </nav>
-<!---------------------------Navegador vertical-------------------------------------------->
-    <div class="container-fluid">
-        <div class="row">
-          <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-            <div class="sidebar-sticky pt-3">
-              <ul class="nav flex-column">
-                <li class="nav-item">
-                  <a class="nav-link active" href="menu.php">
-                    <span data-feather="home"></span>
-                    Ventas <span class="sr-only">(current)</span>
-                  </a>
+    <!---------------------------Navegador vertical-------------------------------------------->
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+        <div class="sidebar-sticky pt-3">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="ventasToggle">
+                <span data-feather="users"></span>
+                Ventas
+              </a>
+              <ul class="list-group collapse fade" id="ventasCollapse">
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="#">Item 1</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="dashboard.php">
-                    <span data-feather="users"></span>
-                    Dashboard
-                  </a>
-                </li>
-                <?php
-                if($_SESSION["id_rol"] == 1){
-                  echo '<li class="nav-item">
-                  <a class="nav-link" href="configuracion.php">
-                      <span data-feather="users"></span>
-                      Configuracion
-                  </a>
-              </li>';
-                }
-                ?>
-                <li class="nav-item boton" >
-                <?php
-                   // Botón de salir
-                   echo '<button class="btn-primary btn"><a href="logout.php" style="color: aliceblue;">Salir</a></button>';
-                   ?>
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>
                 </li>
               </ul>
-            </div>
-          </nav>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="dashboardToggle">
+                <span data-feather="users"></span>
+                Dashboard
+              </a>
+              <ul class="list-group collapse fade" id="dashboardCollapse">
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="#">Item 1</a>
+                </li>
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="solicitudesToggle">
+                <span data-feather="users"></span>
+                Solicitudes
+              </a>
+              <ul class="list-group collapse fade" id="solicitudesCollapse">
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="solicitudes.php">Ver solicitudes</a>
+                </li>
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="creaSolicitud.php">Crear solicitud</a>
+                </li>
+              </ul>
+            </li>
+            <?php
+            if ($_SESSION["id_rol"] == 1) {
+              echo '<li class="nav-item">
+                                  <a class="nav-link" href="configuracion.php">
+                                      <span data-feather="users"></span>
+                                      Configuracion
+                                  </a>
+                              </li>';
+            }
+            ?>
+            <li class="nav-item boton">
+              <?php
+              // Botón de salir
+              echo '<button class="btn-primary btn"><a href="logout.php" style="color: aliceblue;">Salir</a></button>';
+              ?>
+            </li>
+          </ul>
         </div>
+      </nav>
     </div>
-<!---------------------------Navegador vertical-------------------------------------------->
+  </div>
+
+  <script>
+    //Desplegar opciones respectivas
+    $(document).ready(function () {
+      $('#ventasToggle').click(function () {
+        $('#ventasCollapse').toggleClass('show');
+      });
+      $('#dashboardToggle').click(function () {
+        $('#dashboardCollapse').toggleClass('show');
+      });
+      $('#solicitudesToggle').click(function () {
+        $('#solicitudesCollapse').toggleClass('show');
+      });
+    });
+  </script>
+  <!---------------------------Navegador vertical-------------------------------------------->
 <!-----------------------------Tablas y graficas del dashboard------------------------------->
 <!-----------------------------Tablas y graficas del dashboard------------------------------->
 </body>
