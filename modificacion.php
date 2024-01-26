@@ -38,6 +38,22 @@
           margin: 8px 0;
           box-sizing: border-box;
         }
+        table {
+            width: 80%;
+            margin: 0 auto; /* Centrar la tabla horizontalmente */
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px; /* Aumentar el espaciado interno */
+            text-align: center;
+            border: 1px solid #dddddd;
+        }
+
+        th {
+            background-color: rgb(175, 30, 45);
+            color:white;
+        }
       </style>
 </head>
 <body>
@@ -149,6 +165,56 @@
   </script>
   <!---------------------------Navegador vertical-------------------------------------------->
 <!-----------------------------modficacion de usuarios de usuarios------------------------------------------>
+<div class="formularios">
+<h2 style="text-align: center;">Modificar Usuarios</h2>
 
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Usuario</th>
+        <th>Contraseña</th>
+        <th>Nombre</th>
+        <th>Sucursal</th>
+        <th>Rol</th>
+        <th>Modificar</th>
+    </tr>
+    <?php
+    // Establecer conexión directamente aquí
+    $conexion = new mysqli("localhost", "root", "", "mavepo");
+
+    // Verificar si la conexión fue exitosa
+    if ($conexion->connect_error) {
+        die("Error de conexión: " . $conexion->connect_error);
+    }
+
+    // Consulta para obtener todos los usuarios con el nombre del rol
+    $query = "SELECT u.id, u.usuario, u.contrasena, u.nombre, u.sucursal, r.nombre_rol 
+              FROM usuarios u
+              INNER JOIN roles r ON u.id_rol = r.id_rol";
+    $result = $conexion->query($query);
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            ?>
+            <tr>
+                <td><?php echo $row['id']; ?></td>
+                <td><?php echo $row['usuario']; ?></td>
+                <td><?php echo $row['contrasena']; ?></td>
+                <td><?php echo $row['nombre']; ?></td>
+                <td><?php echo $row['sucursal']; ?></td>
+                <td><?php echo $row['nombre_rol']; ?></td>
+                <td><a href="procesar_modificacion.php?id=<?php echo $row['id']; ?>">Editar</a></td>
+            </tr>
+            <?php
+        }
+    } else {
+        echo "No se encontraron usuarios.";
+    }
+
+    // Cerrar la conexión después de usarla
+    $conexion->close();
+    ?>
+</table>
+</div>
 </body>
 </html>
