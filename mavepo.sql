@@ -47,10 +47,10 @@ INSERT INTO `roles` (`id_rol`, `nombre_rol`) VALUES
 --
 -- Estructura de tabla para la tabla `solicitudes`
 --
-
 CREATE TABLE `solicitudes` (
   `id` int(99) NOT NULL,
   `nombreSolicitud` varchar(99) NOT NULL,
+  `descripcion` varchar(255) NOT NULL,
   `responsable` varchar(99) NOT NULL,
   `fecha` varchar(99) NOT NULL,
   `estado` varchar(50) NOT NULL,
