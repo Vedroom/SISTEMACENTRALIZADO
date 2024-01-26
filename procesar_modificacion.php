@@ -1,3 +1,42 @@
+<?php
+if(isset($_GET['id'])) {
+    // Establecer conexión a la base de datos (debes incluir tu lógica de conexión)
+    $conexion = new mysqli("localhost", "root", "", "mavepo");
+
+    // Verificar si la conexión fue exitosa
+    if ($conexion->connect_error) {
+        die("Error de conexión: " . $conexion->connect_error);
+    }
+
+    // Obtener el ID de usuario de la URL
+    $id_usuario = $_GET['id'];
+
+    // Verificar si se enviaron los datos del formulario
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Recuperar los datos del formulario
+        $usuario = $_POST["usuario"];
+        $contrasena = $_POST["contrasena"];
+        $nombre = $_POST["nombre"];
+        $sucursal = $_POST["sucursal"];
+        $rol = $_POST["id_rol"];
+
+        // Consulta SQL para actualizar los datos del usuario
+        $query = "UPDATE usuarios SET usuario='$usuario', contrasena='$contrasena', nombre='$nombre', sucursal='$sucursal', id_rol='$rol' WHERE id='$id_usuario'";
+
+        // Ejecutar la consulta
+        if ($conexion->query($query) === TRUE) {
+            header("Location: modificacion.php");
+        } else {
+            echo "Error al actualizar los datos del usuario: " . $conexion->error;
+        }
+    } else {
+        // Consulta para obtener los datos del usuario con el ID proporcionado
+        $consulta_usuario = "SELECT * FROM usuarios WHERE id = $id_usuario";
+        $resultado_usuario = $conexion->query($consulta_usuario);
+
+        if ($resultado_usuario->num_rows > 0) {
+            $row = $resultado_usuario->fetch_assoc(); // Obtener los datos del usuario
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,22 +76,6 @@
           padding: 12px 20px;
           margin: 8px 0;
           box-sizing: border-box;
-        }
-        table {
-            width: 80%;
-            margin: 0 auto; /* Centrar la tabla horizontalmente */
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 10px; /* Aumentar el espaciado interno */
-            text-align: center;
-            border: 1px solid #dddddd;
-        }
-
-        th {
-            background-color: rgb(175, 30, 45);
-            color:white;
         }
       </style>
 </head>
@@ -118,57 +141,62 @@
         </div>
     </div>
 <!---------------------------Navegador vertical-------------------------------------------->
-<!-----------------------------modficacion de usuarios de usuarios------------------------------------------>
+<!---------------------------Modificacion de usuario------------------------------------------>
 <div class="formularios">
-<h2 style="text-align: center;">Modificar Usuarios</h2>
+<h2>Modificación de Usuario</h2>
+    <form action="" method="post">
+        <input type="hidden" name="id" value="<?php echo $id_usuario; ?>"> <!-- Campo oculto para enviar el ID del usuario -->
+        
+        <label for="usuario">Nombre de Usuario:</label>
+        <input type="text" id="usuario" name="usuario" value="<?php echo $row['usuario']; ?>" required><br>
 
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Usuario</th>
-        <th>Contraseña</th>
-        <th>Nombre</th>
-        <th>Sucursal</th>
-        <th>Rol</th>
-        <th>Modificar</th>
-    </tr>
-    <?php
-    // Establecer conexión directamente aquí
-    $conexion = new mysqli("localhost", "root", "", "mavepo");
+        <label for="contrasena">Contraseña:</label>
+        <input type="text" id="contrasena" name="contrasena" value="<?php echo $row['contrasena']; ?>" required><br>
 
-    // Verificar si la conexión fue exitosa
-    if ($conexion->connect_error) {
-        die("Error de conexión: " . $conexion->connect_error);
-    }
+        <label for="nombre">Nombre Completo:</label>
+        <input type="text" id="nombre" name="nombre" value="<?php echo $row['nombre']; ?>" required><br>
 
-    // Consulta para obtener todos los usuarios con el nombre del rol
-    $query = "SELECT u.id, u.usuario, u.contrasena, u.nombre, u.sucursal, r.nombre_rol 
-              FROM usuarios u
-              INNER JOIN roles r ON u.id_rol = r.id_rol";
-    $result = $conexion->query($query);
+        <label for="sucursal">Sucursal:</label>
+        <select name="sucursal" id="sucursal">
+            <option value="SLP" <?php if ($row['sucursal'] == 'SLP') echo 'selected'; ?>>Matriz San Luis Potosi</option>
+            <option value="RioVerde" <?php if ($row['sucursal'] == 'RioVerde') echo 'selected'; ?>>RioVerde,SLP</option>
+            <option value="CDValles" <?php if ($row['sucursal'] == 'CDValles') echo 'selected'; ?>>Ciudad Valles</option>
+            <option value="SLPaz" <?php if ($row['sucursal'] == 'SLPaz') echo 'selected'; ?>>San Luis de la Paz</option>
+            <option value="Gpe" <?php if ($row['sucursal'] == 'Gpe') echo 'selected'; ?>>Guadalupe,Zac</option>
+            <option value="Fresnillo" <?php if ($row['sucursal'] == 'Fresnillo') echo 'selected'; ?>>Fresnillo,Zac</option>
+            <option value="Loreto" <?php if ($row['sucursal'] == 'Loreto') echo 'selected'; ?>>Loreto,Zac</option>
+            <option value="Ebano" <?php if ($row['sucursal'] == 'Ebano') echo 'selected'; ?>>Ebano,SLP</option>
+            <option value="Salinas" <?php if ($row['sucursal'] == 'Salinas') echo 'selected'; ?>>Salinas,SLP</option>
+            <option value="Guzman" <?php if ($row['sucursal'] == 'Guzman') echo 'selected'; ?>>Guzman</option>
+            <option value="Colima" <?php if ($row['sucursal'] == 'Colima') echo 'selected'; ?>>Colima</option>
+            <option value="Autlan" <?php if ($row['sucursal'] == 'Autlan') echo 'selected'; ?>>Autlan</option>
+        </select><br>
 
-    if ($result && $result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            ?>
-            <tr>
-                <td><?php echo $row['id']; ?></td>
-                <td><?php echo $row['usuario']; ?></td>
-                <td><?php echo $row['contrasena']; ?></td>
-                <td><?php echo $row['nombre']; ?></td>
-                <td><?php echo $row['sucursal']; ?></td>
-                <td><?php echo $row['nombre_rol']; ?></td>
-                <td><a href="procesar_modificacion.php?id=<?php echo $row['id']; ?>">Editar</a></td>
-            </tr>
-            <?php
-        }
-    } else {
-        echo "No se encontraron usuarios.";
-    }
+        <label for="rol">Rol:</label>
+        <select id="rol" name="id_rol">
+            <option value="1" <?php if ($row['id_rol'] == 1) echo 'selected'; ?>>Administrador</option>
+            <option value="2" <?php if ($row['id_rol'] == 2) echo 'selected'; ?>>Lectura</option>
+            <option value="3" <?php if ($row['id_rol'] == 3) echo 'selected'; ?>>Usuario Regular</option>
+        </select><br>
 
-    // Cerrar la conexión después de usarla
-    $conexion->close();
-    ?>
-</table>
+        <div class="form-group">
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                <a href="#" class="btn btn-secondary" onclick="window.history.back();">Cancelar</a>
+            </div>
+    </form>
 </div>
 </body>
 </html>
+<?php
+        } else {
+            echo "No se encontró el usuario.";
+        }
+    }
+
+    // Cerrar la conexión a la base de datos
+    $conexion->close();
+} else {
+    // Si no se proporcionó un ID de usuario, puedes redirigir al usuario a una página de error o mostrar un mensaje indicando que no se proporcionó un ID válido
+    echo "ID de usuario no proporcionado.";
+}
+?>
