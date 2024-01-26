@@ -12,14 +12,18 @@ if ($conn->connect_error) {
     die("La conexión a la base de datos ha fallado: " . $conn->connect_error);
 }
 // Recuperar datos del formulario
-$usuario = $_POST['usuario'];
+$nombreSolicitud = $_SESSION["usuario"];
+$descripcion = $_POST["descripcion"];
 $contrasena = $_POST['contrasena'];
 $nombre = $_POST['nombre'];
 $sucursal = $_POST['sucursal'];
 $id_rol = $_POST['id_rol'];
+$fechaHoy = date("Y-m-d"); // Formato: Año-Mes-Día
+
 
 // Insertar datos en la tabla "usuario"
-$sql = "INSERT INTO usuarios (nombreSolicitud, descripcion, responsable, fecha, estado, presupuesto, prioridad) VALUES ('$usuario', '$contrasena','$nombre', '$sucursal', '$id_rol')";
+$sql = "INSERT INTO usuarios (nombreSolicitud, descripcion, responsable, fecha, estado, presupuesto, prioridad) 
+                      VALUES ('$usuario', '$contrasena','$nombre', '$sucursal', '$id_rol')";
 
 if ($conn->query($sql) === TRUE) {
     $message = "Solicitud creada";
