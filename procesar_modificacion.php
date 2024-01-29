@@ -142,7 +142,7 @@ if(isset($_GET['id'])) {
     </div>
 <!---------------------------Navegador vertical-------------------------------------------->
 <!---------------------------Modificacion de usuario------------------------------------------>
-<div class="formularios">
+<div class="container formularios">
 <h2>Modificación de Usuario</h2>
     <form action="" method="post">
         <input type="hidden" name="id" value="<?php echo $id_usuario; ?>"> <!-- Campo oculto para enviar el ID del usuario -->
@@ -196,7 +196,7 @@ if(isset($_GET['id'])) {
     // Cerrar la conexión a la base de datos
     $conexion->close();
 } else {
-    // Si no se proporcionó un ID de usuario, puedes redirigir al usuario a una página de error o mostrar un mensaje indicando que no se proporcionó un ID válido
+    // Si no se proporcionó un ID de usuario
     echo "ID de usuario no proporcionado.";
 }
 ?>

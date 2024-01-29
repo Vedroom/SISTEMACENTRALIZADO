@@ -38,28 +38,22 @@
           margin: 8px 0;
           box-sizing: border-box;
         }
-        .custom-btn {
-      background-color: rgb(175, 30, 45); /* Color de fondo */
-      border: none; /* Sin borde */
-      color: white; /* Color del texto */
-      padding: 10px 20px; /* Espaciado interno */
-      text-align: center; /* Alineación del texto */
-      text-decoration: none; /* Sin subrayado */
-      display: inline-block;
-      font-size: 16px; /* Tamaño del texto */
-      margin: 4px 35px; /* Margen externo */
-      transition-duration: 0.4s; /* Duración de la transición */
-      cursor: pointer; /* Cursor al pasar sobre el botón */
-    }
+        table {
+            width: 80%;
+            margin: 0 auto; /* Centrar la tabla horizontalmente */
+            border-collapse: collapse;
+        }
 
-    .custom-btn:hover {
-      background-color: black; /* Cambio de color al pasar el cursor */
-      color: white; /* Cambio de color del texto */
-    }
-    .custom-btn a{
-        text-decoration: none;
-        color:aliceblue;
-    }
+        th, td {
+            padding: 10px; /* Aumentar el espaciado interno */
+            text-align: center;
+            border: 1px solid #dddddd;
+        }
+
+        th {
+            background-color: rgb(175, 30, 45);
+            color:white;
+        }
       </style>
 </head>
 <body>
@@ -155,7 +149,6 @@
     </div>
   </div>
 
-  
   <script>
     //Desplegar opciones respectivas
     $(document).ready(function () {
@@ -171,17 +164,72 @@
     });
   </script>
   <!---------------------------Navegador vertical-------------------------------------------->
-<!-----------------------------Configuracion------------------------------------------>
-<h2 style="text-align: center;" class="formularios"><strong>Usuarios</strong></h2>
-<hr>
+<!-----------------------------Bajas de usuarios------------------------------------------>
 <div class="container formularios">
-  <!-- Alta de usuarios -->
-  <button type="button" class="custom-btn"><a href="usuarios.php"><strong>Alta de usuarios</strong></a></button>
-  <!-- Modificaciones de usuarios -->
-  <button type="button" class="custom-btn"><a href="modificacion.php"><strong>Modificacion de usuarios</strong></a></button>
-  <!-- Baja de usuarios -->
-  <button type="button" class="custom-btn"><a href="bajas.php"><strong>Baja de usuarios</strong></a></button>
+    <h2 style="text-align: center;">Bajas de usuarios</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nombre de Uusuarios</th>
+            <th>Nombre Completo</th>
+            <th>Sucursal</th>
+            <th>Rol</th>
+            <th>Baja</th>
+        </tr>
+        <?php
+        //Establecer conexion a la base de datos
+        $conexion = new mysqli("localhost", "root", "", "mavepo");
+
+        //Verificar si la conexion fue exitosa
+        if ($conexion->connect_error) {
+            die("Error de conexion: " . $conexion->connect_error);
+        }
+        // Consulta SQL para obtener la lista de usuarios
+        $consulta = "SELECT * FROM usuarios";
+        $resultado = $conexion->query($consulta);
+
+        if ($resultado->num_rows > 0) {
+            while($row = $resultado->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $row["id"] . "</td>";
+                echo "<td>" . $row["usuario"] . "</td>";
+                echo "<td>" . $row["nombre"] . "</td>";
+                echo "<td>" . $row["sucursal"] . "</td>";
+                // Aquí deberías obtener el nombre del rol según el ID de rol en la tabla roles
+                // Puedes agregar esa lógica aquí mismo o realizar una consulta adicional a la tabla roles
+                echo "<td>" . obtenerNombreRol($conexion, $row["id_rol"]) . "</td>";
+                echo "<td><button onclick='confirmarBaja(" . $row["id"] . ")'>Dar de Baja</button></td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='6'>No hay usuarios disponibles.</td></tr>";
+        }
+        ?>
+    </table>
+    <script>
+        function confirmarBaja(idUsuario) {
+            var respuesta = confirm("¿Estás seguro de que deseas dar de baja a este usuario?");
+            if (respuesta == true) {
+                // Si el usuario confirma, redirigir a procesar_baja.php con el ID del usuario
+                window.location.href = "procesar_baja.php?id=" + idUsuario;
+            }
+        }
+    </script>
+
+<?php
+    // Función para obtener el nombre del rol según el ID de rol
+    function obtenerNombreRol($conexion, $idRol) {
+        // Consulta SQL para obtener el nombre del rol según el ID de rol
+        $consulta = "SELECT nombre_rol FROM roles WHERE id_rol = $idRol";
+        $resultado = $conexion->query($consulta);
+        if ($resultado->num_rows > 0) {
+            $row = $resultado->fetch_assoc();
+            return $row["nombre_rol"];
+        } else {
+            return "Rol Desconocido";
+        }
+    }
+    ?>
 </div>
-<hr>
 </body>
 </html>
