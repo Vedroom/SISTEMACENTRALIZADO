@@ -163,11 +163,17 @@ $idUsuario = $_SESSION["id"];
 <div class="container formularios">
 <h2>Subir Venta</h2>
     <form action="procesar_venta.php" method="post">
-        <label for="id_tractor">ID del Tractor:</label>
+        <label for="id_tractor">Seleccionar tractor</label>
         <input type="text" id="id_tractor" name="id_tractor" required><br>
+
+        <label for="modelo">Modelo</label>
+        <input type="text" id="modelo" name="modelo" required><br>
 
         <label for="cantidad">Cantidad:</label>
         <input type="number" id="cantidad" name="cantidad" required><br>
+
+        <label for="precio">Precio:</label>
+        <input type="number" id="precio" name="precio" required><br>
 
         <label for="fecha">Fecha:</label>
         <input type="date" id="fecha" name="fecha" required><br>
