@@ -11,19 +11,21 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("La conexión a la base de datos ha fallado: " . $conn->connect_error);
 }
-// Recuperar datos del formulario
-$nombreSolicitud = $_SESSION["usuario"];
-$descripcion = $_POST["descripcion"];
-$contrasena = $_POST['contrasena'];
-$nombre = $_POST['nombre'];
-$sucursal = $_POST['sucursal'];
-$id_rol = $_POST['id_rol'];
-$fechaHoy = date("Y-m-d"); // Formato: Año-Mes-Día
 
+// Recuperar datos del formulario
+session_start();
+$nombreSolicitud = $_POST["nombreSolicitud"];
+$descripcion = $_POST["desc"];
+$presupuesto = $_POST['presupuesto'];
+$prioridad = $_POST['prioridad'];
+$fechaHoy = date("d/m/Y"); // Formato: Año-Mes-Día
+$estadoInicial = "En curso";
+$responsable = $_SESSION["usuario"];
+echo "$nombreSolicitud";
 
 // Insertar datos en la tabla "usuario"
-$sql = "INSERT INTO usuarios (nombreSolicitud, descripcion, responsable, fecha, estado, presupuesto, prioridad) 
-                      VALUES ('$usuario', '$contrasena','$nombre', '$sucursal', '$id_rol')";
+$sql = "INSERT INTO solicitudes (nombreSolicitud, descripcion, responsable, fecha, estado, presupuesto, prioridad) 
+                      VALUES ('$nombreSolicitud', '$descripcion','$responsable', '$fechaHoy', '$estadoInicial', '$presupuesto', '$prioridad')";
 
 if ($conn->query($sql) === TRUE) {
     $message = "Solicitud creada";
