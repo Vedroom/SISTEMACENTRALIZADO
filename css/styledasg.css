@@ -109,3 +109,87 @@
 #nivel2:hover {
   background-color: rgb(225, 225, 225);
 }
+
+.clickeable {
+  cursor: pointer;
+}
+
+/* Estilos de verSolicitud*/
+
+.informacion-solicitud {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.group-solicitud {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.solicitud-card {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+}
+
+.solicitud-card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.solicitud-details {
+  margin-left: 1rem;
+}
+
+.solicitud-title {
+  display: grid;
+  grid-template-rows: repeat(auto-fit, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.solicitud-info {
+  margin-bottom: 0.5rem;
+}
+
+.solicitud-info span {
+  font-weight: bold;
+}
+
+.solicitud-description {
+  white-space: pre-wrap;
+}
+
+.bg-success {
+  text-align: center;
+}
+
+.bg-danger {
+  text-align: center;
+}
+
+.bg-warning {
+  text-align: center;
+}
+
+.bg-default {
+  text-align: center;
+}
+
+.bg-primary {
+  text-align: center;
+}
+
+.bg-info {
+  text-align: center;
+}
+
+.bg-secondary {
+  text-align: center;
+}

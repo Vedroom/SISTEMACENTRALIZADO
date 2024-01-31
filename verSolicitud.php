@@ -161,148 +161,86 @@
 
 
   <?php
-  #PROCESAMIENTO DE DATOS, PARA OBTENER LOS REGISTROS DE SOLICITUD
+  //PROCESAMIENTO DE DATOS, PARA OBTENER LOS REGISTROS DE SOLICITUD
   include("db.php");
-  $cuenta_solicitudes = "SELECT * FROM  solicitudes";
-  $resultado_busca_solicitudes = mysqli_query($con, $cuenta_solicitudes);
-  $numero_solicitudes = mysqli_num_rows($resultado_busca_solicitudes);
 
-  //Consultando la id de la primer solicitud para empezar la consulta desde ahí
-  $consulta_primer_solicitud = "SELECT * FROM `solicitudes`";
-  $resultado_primer_solicitud = mysqli_query($con, $consulta_primer_solicitud);
-  $registro_primer_solicitud = mysqli_fetch_array($resultado_primer_solicitud, MYSQLI_ASSOC);
-  $primer_id = $registro_primer_solicitud['id'];
+  //Obtén el nombre del registro desde la URL
+  $nombreSolicitud = $_GET['nombre'];
+  
+  //Realiza una consulta para obtener los detalles del registro con el nombre
+  $busca_solicitud = "SELECT * FROM `solicitudes` WHERE nombreSolicitud='$nombreSolicitud'";
+  $result = mysqli_query($con, $busca_solicitud);
+  $row = mysqli_fetch_array($result, MYSQLI_ASSOC); 
 
-  //Obteniendo la ultima id para parar
-  $numero_de_proyectos = mysqli_num_rows($resultado_primer_solicitud);
-  $ultima_id = $primer_id + ($numero_solicitudes - 1);
-  $indice = 1;
-  ?>
+  //Separa la información faltante  en campos 
+  $descripcion = $row['descripcion'];
+  $responsable = $row['responsable'];
+  $fecha =  $row['fecha'];
+  $estado = $row['estado'];
+  $presupuesto = $row['presupuesto'];
+  $prioridad = $row['prioridad'];
 
+  //Define la clase dependiendo del estado asignado
+  function asignarClaseEstado($estado)
+  {
+    switch ($estado) {
+      case 'Listo':
+        return 'bg-success text-white';
+      case 'Detenido':
+        return 'bg-danger text-white';
+      case 'En curso':
+        return 'bg-warning text-dark';
+      default:
+        // Si el estado no coincide con ninguno de los casos anteriores, puedes devolver una clase por defecto.
+        return 'bg-default';
+    }
+  }
+
+  //Define la clase dependiendo la prioridad asignada
+  function asignarClasePrioridad($estado)
+  {
+    switch ($estado) {
+      case 'Alta':
+        return 'bg-primary text-white';
+      case 'Media':
+        return 'bg-info text-white';
+      case 'Baja':
+        return 'bg-secondary text-white';
+      default:
+        // Si el estado no coincide con ninguno de los casos anteriores, puedes devolver una clase por defecto.
+        return 'bg-default';
+    }
+  }
+
+  // Define la clase del registro, segun su estado/prioridad
+  $claseEstado = asignarClaseEstado($estado);
+  $clasePrioridad = asignarClasePrioridad($prioridad);
+
+  ?> 
   <div class="container">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Solicitud</th>
-          <th scope="col">Responsable</th>
-          <th scope="col">Fecha</th>
-          <th scope="col">Estado</th>
-          <th scope="col">Presupuesto</th>
-          <th scope="col">Prioridad</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        <?php
-
-        //Indice para numerar los renglones
-        $indice = 1;
-
-        //Define la clase dependiendo del estado asignado
-        function asignarClaseEstado($estado)
-        {
-          switch ($estado) {
-            case 'Listo':
-              return 'bg-success text-white';
-            case 'Detenido':
-              return 'bg-danger text-white';
-            case 'En curso':
-              return 'bg-warning text-dark';
-            default:
-              // Si el estado no coincide con ninguno de los casos anteriores, puedes devolver una clase por defecto.
-              return 'bg-default';
-          }
-        }
-
-        //Define la clase dependiendo la prioridad asignada
-        function asignarClasePrioridad($estado)
-        {
-          switch ($estado) {
-            case 'Alta':
-              return 'bg-primary text-white';
-            case 'Media':
-              return 'bg-info text-white';
-            case 'Baja':
-              return 'bg-secondary text-white';
-            default:
-              // Si el estado no coincide con ninguno de los casos anteriores, puedes devolver una clase por defecto.
-              return 'bg-default';
-          }
-        }
-    
-        //Recorre los registros
-        for ($primer_id; $primer_id <= $ultima_id; $primer_id++) {
-
-
-          //Obtiene datos de la solicitud
-          $busca_solicitud = "SELECT * FROM `solicitudes` WHERE id='$primer_id'";
-          $result = mysqli_query($con, $busca_solicitud);
-          $rows = mysqli_num_rows($result);
-          $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-
-          //Datos del QRY
-          $nombre = (string) $row['nombreSolicitud'];
-          $responsable = $row['responsable'];
-          $fecha = $row['fecha'];
-          $estado = $row['estado'];
-          $presupuesto = $row['presupuesto'];
-          $prioridad = $row['prioridad'];
-
-          // Define la clase del registro, segun su estado/prioridad
-          $claseEstado = asignarClaseEstado($estado);
-          $clasePrioridad = asignarClasePrioridad($prioridad);
-
-
-          ?>
-
-        <tr class="clickeable" data-name="<?php echo $nombre; ?>">
-          <th scope="row">
-            <?php echo $indice;
-            $indice++; ?>
-          </th>
-          <td>
-            <?php echo mb_strtoupper($nombre, 'UTF-8'); ?>
-          </td>
-          <td>
-            <?php echo $responsable; ?>
-          </td>
-          <td>
-            <?php echo $fecha; ?>
-          </td>
-          <td class="<?php echo $claseEstado; ?>">
-            <?php echo $estado; ?>
-          </td>
-          <td>
-            <?php echo $presupuesto; ?>
-          </td>
-          <td class="<?php echo $clasePrioridad; ?>">
-            <?php echo $prioridad; ?>
-          </td>
-        </tr>
-        <?php } ?>
-
-        <script>
-          document.addEventListener("DOMContentLoaded", function () {
-            // Obtiene todas las filas clickeables
-            var filasClickeables = document.querySelectorAll(".clickeable");
-
-            // Agrega un evento de clic a cada fila
-            filasClickeables.forEach(function (fila) {
-              fila.addEventListener("click", function () {
-                // Obtiene el nombre de la solicitud desde el atributo data-id
-                var nombreSolicitud = fila.getAttribute("data-name");
-
-                // Redirige a la página de detalles con el nombre de la solicitud
-                window.location.href = "verSolicitud.php?nombre=" + nombreSolicitud;
-              });
-            });
-          });
-        </script>
-
-
-      </tbody>
-    </table>
+    <div class="informacion-solicitud">
+      <div class="solicitud-card">
+        <div class="solicitud-details">
+          <div class="solicitud-title">
+            <div> <?php echo mb_strtoupper($nombreSolicitud, 'UTF-8'); ?></div>
+            <div class="<?php echo $claseEstado; ?>"> <?php echo $estado; ?></div>
+            <div class="<?php echo $clasePrioridad; ?>"> Prioridad <?php echo $prioridad; ?></div>
+          </div>
+          <div class="solicitud-info">
+            Fecha de realización: <span>   <?php echo $fecha; ?> </span>
+          </div>
+          <div class="solicitud-info">
+            Responsable: <span>  <?php echo $responsable; ?></span>
+          </div>
+          <div class="solicitud-info">
+            Presupuesto estimado: <span>$<?php echo $presupuesto;?></span>
+          </div>
+          <div class="solicitud-description">
+            <?php echo $descripcion;?>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-----------------------------Contenido principal------------------------------->
