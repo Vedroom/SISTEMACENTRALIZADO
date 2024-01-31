@@ -85,10 +85,12 @@ CREATE TABLE `solicitudes` (
 -- Volcado de datos para la tabla `solicitudes`
 --
 
+
 INSERT INTO `solicitudes` (`id`, `nombreSolicitud`, `descripcion`, `responsable`, `fecha`, `estado`, `presupuesto`, `prioridad`) VALUES
-(1, 'Cotización pc', '', 'Luis', '25/01/2024', 'En curso', 1200, 'Media'),
-(2, 'Papeleria', '', 'Juan', '25/01/2024', 'Detenido', 5000, 'Alta'),
-(3, 'piezas', '', 'Juan', '24/01/2024', 'Listo', 500, 'Baja');
+(1, 'Cotización pc', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su', 'Luis', '25/01/2024', 'En curso', 1200, 'Media'),
+(2, 'Papeleria', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su', 'Juan', '25/01/2024', 'Detenido', 5000, 'Alta'),
+(3, 'piezas', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su', 'Juan', '24/01/2024', 'Listo', 500, 'Baja');
+
 
 -- --------------------------------------------------------
 
