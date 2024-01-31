@@ -28,6 +28,16 @@
         .boton a{
           text-decoration: none;
         }
+        .formularios{
+             padding-left: 332px;
+            }
+        
+        input[type=text] {
+          width: 100%;
+          padding: 12px 20px;
+          margin: 8px 0;
+          box-sizing: border-box;
+        }
       </style>
 </head>
 <body>
@@ -51,8 +61,9 @@
               <p style="color: aliceblue;"><?php echo $_SESSION["nombre"]; ?></p>
             </li>
         </ul>
-    </nav><!---------------------------Navegador vertical-------------------------------------------->
-  <div class="container-fluid">
+    </nav>
+<!---------------------------Navegador vertical-------------------------------------------->
+<div class="container-fluid">
     <div class="row">
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
         <div class="sidebar-sticky pt-3">
@@ -137,5 +148,41 @@
     });
   </script>
   <!---------------------------Navegador vertical-------------------------------------------->
+<!-----------------------------Alta de usuarios------------------------------------------>
+<?php
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION["id"])) {
+    // Redirigir al usuario al formulario de inicio de sesión si no ha iniciado sesión
+    header("Location: login.php");
+    exit();
+}
+
+// Obtener el ID de usuario de la sesión
+$idUsuario = $_SESSION["id"];
+?>
+<div class="container formularios">
+<h2>Subir Venta</h2>
+    <form action="procesar_venta.php" method="post">
+        <label for="id_tractor">Seleccionar tractor</label>
+        <input type="text" id="id_tractor" name="id_tractor" required><br>
+
+        <label for="modelo">Modelo</label>
+        <input type="text" id="modelo" name="modelo" required><br>
+
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" id="cantidad" name="cantidad" required><br>
+
+        <label for="precio">Precio:</label>
+        <input type="number" id="precio" name="precio" required><br>
+
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" required><br>
+
+        <!-- Campo oculto para enviar el ID del usuario -->
+        <input type="hidden" name="id_usuario" value="<?php echo $idUsuario; ?>">
+
+        <input type="submit" value="Subir Venta">
+    </form>
+</div>
 </body>
 </html>
