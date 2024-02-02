@@ -1,5 +1,11 @@
+
+/* no*/
 .imglogo {
   width: 295px;
+}
+
+.imglogo {
+  width: 100%;
 }
 
 .body {
@@ -192,4 +198,11 @@
 
 .bg-secondary {
   text-align: center;
+}
+
+/* Panel de notificaciones*/
+
+#imgNotificaciones:hover{
+  filter: brightness(80%);
+  transition: filter 0.3s ease;
 }

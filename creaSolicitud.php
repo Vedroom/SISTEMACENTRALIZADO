@@ -75,6 +75,7 @@
         <!------------------------Identificacion del usuario de la sesion------------->
         <p style="color: aliceblue;">
           <?php echo $_SESSION["nombre"]; ?>
+          
         </p>
       </li>
     </ul>
