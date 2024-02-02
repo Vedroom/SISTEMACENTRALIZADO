@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-02-2024 a las 21:51:16
+-- Tiempo de generación: 02-02-2024 a las 16:56:06
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -164,7 +164,21 @@ INSERT INTO `serie` (`id_serie`, `nombre`, `id_modelo`) VALUES
 (63, 'MF4309E-4WD-GT', 14),
 (64, 'MF4310E-4WD-GT', 15),
 (65, 'TRACTOR MF4708-4WD MS', 16),
-(66, 'MF4708-4WD-AD/PS', 16);
+(66, 'MF4708-4WD-AD/PS', 16),
+(67, 'MF5710C4WD-MT4/PS-CR', 17),
+(68, 'TRACTOR  MF5710 2WD TURBO', 17),
+(69, 'MF5710-4WD-MT4/PS-CR', 17),
+(70, 'TRACTOR MF5710 4WD MT4', 17),
+(71, 'TRACTOR MF6711-4WD-MT2/PS', 18),
+(72, 'TRACTOR MF6711-4WD-AT/PS', 18),
+(73, 'MF6711C-4WD-AT/PS', 18),
+(74, 'TRACTOR MF6711 CAB 4WD TURBO INTERCOOLER', 18),
+(75, 'MF6712C-4WD-AT/PS', 19),
+(76, 'TRACTOR MF6713 4WD TURBO', 20),
+(77, 'TRACTOR MF7615 4WD CAB FIJ EJE F TR', 21),
+(78, 'TRACTOR FORD 1992 7610T USADO', 22),
+(79, 'TRACTOR JX95 AGRICOLA', 23),
+(80, 'TRACTOR MF2630 2WD NAT TRANS 8X2', 24);
 
 -- --------------------------------------------------------
 

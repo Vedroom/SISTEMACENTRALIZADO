@@ -58,7 +58,7 @@
 </head>
 <body>
     <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow navegador">
-        <a href="#" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png" alt="" class="imglogo"></a>
+        <a href="menu.php" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png" alt="" class="imglogo"></a>
         <button class="navbar-toggler position-absolute d-md-none collapesed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanden="false" aria-label="Toggle navegation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -91,7 +91,7 @@
               </a>
               <ul class="list-group collapse fade" id="ventasCollapse">
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="#">Item 1</a>
+                  <a class="btn btn-sm btn-block text-left" href="ventas_tractores.php">Tractores</a>
                 </li>
                 <li class="list-group-item" id="nivel2">
                   <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>

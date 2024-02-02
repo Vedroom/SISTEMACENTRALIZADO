@@ -38,11 +38,12 @@
           margin: 8px 0;
           box-sizing: border-box;
         }
+        
       </style>
 </head>
 <body>
     <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow navegador">
-        <a href="#" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png" alt="" class="imglogo"></a>
+        <a href="menu.php" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png" alt="" class="imglogo"></a>
         <button class="navbar-toggler position-absolute d-md-none collapesed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanden="false" aria-label="Toggle navegation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -90,7 +91,7 @@
               </a>
               <ul class="list-group collapse fade" id="dashboardCollapse">
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="#">Item 1</a>
+                  <a class="btn btn-sm btn-block text-left" href="ventas_tractores.php">Tractores</a>
                 </li>
                 <li class="list-group-item" id="nivel2">
                   <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>
@@ -161,28 +162,96 @@ if (!isset($_SESSION["id"])) {
 $idUsuario = $_SESSION["id"];
 ?>
 <div class="container formularios">
-<h2>Subir Venta</h2>
-    <form action="procesar_venta.php" method="post">
-        <label for="id_tractor">Seleccionar tractor</label>
-        <input type="text" id="id_tractor" name="id_tractor" required><br>
+<h2><strong>Subir Venta</strong></h2>
+    <form action="procesar_venta.php" method="post" id="ventaForm">
+      <div class="form-group">
+      <label for="modelo">Modelo</label>
+      <select class="form-control" name="modelo" id="modelo" onchange="cargarSeries()">
+      <option value="">Seleccione un modelo</option>
+      <!-- Aquí se cargarán dinámicamente las opciones de modelo -->
+    </select>
+      </div>
 
-        <label for="modelo">Modelo</label>
-        <input type="text" id="modelo" name="modelo" required><br>
+      <div class="form-group">
+      <label for="serie">Serie:</label>
+      <select class="form-control" name="serie" id="serie">
+      <option value="">Seleccione una serie</option>
+      </select>
+      </div>
 
-        <label for="cantidad">Cantidad:</label>
-        <input type="number" id="cantidad" name="cantidad" required><br>
+      <div class="form-group">
+      <label for="canitdad">Cantidad:</label>
+      <input type="number" class="form-control" name="cantidad" id="canitdad" required>
+      </div>
+    
+      <div class="form-group">
+      <label for="precio">Precio unitario:</label>
+      <input type="number" class="form-control" name="precio" id="precio" step="0.01" required>
+      </div>
 
-        <label for="precio">Precio:</label>
-        <input type="number" id="precio" name="precio" required><br>
-
-        <label for="fecha">Fecha:</label>
-        <input type="date" id="fecha" name="fecha" required><br>
+      <div class="form-group">
+      <label for="fecha">Fecha:</label>
+      <input type="date" class="form-control" name="fecha" id="fecha" required>
+      </div>
 
         <!-- Campo oculto para enviar el ID del usuario -->
         <input type="hidden" name="id_usuario" value="<?php echo $idUsuario; ?>">
 
         <input type="submit" value="Subir Venta">
     </form>
+    <script>
+    function cargarModelos() {
+        var modeloSelect = document.getElementById("modelo");
+
+        // Limpiar las opciones de modelos
+        modeloSelect.innerHTML = '<option value="">Cargando modelos...</option>';
+
+        // Realizar una petición AJAX para obtener los modelos
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "obtener_modelos.php", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Si la petición es exitosa, actualizar las opciones de modelo
+                    modeloSelect.innerHTML = xhr.responseText;
+                } else {
+                    // Si hay un error, mostrar un mensaje
+                    modeloSelect.innerHTML = '<option value="">Error al cargar modelos</option>';
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    // Llamar a la función para cargar los modelos cuando la página se carga
+    window.onload = cargarModelos;
+</script>
+<script>
+    function cargarSeries() {
+        var modeloSeleccionado = document.getElementById("modelo").value;
+        var serieSelect = document.getElementById("serie");
+
+        // Limpiar las opciones de serie
+        serieSelect.innerHTML = '<option value="">Cargando series...</option>';
+
+        // Realizar una petición AJAX para obtener las series del modelo seleccionado
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "obtener_series.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Si la petición es exitosa, actualizar las opciones de la serie
+                    serieSelect.innerHTML = xhr.responseText;
+                } else {
+                    // Si hay un error, mostrar un mensaje
+                    serieSelect.innerHTML = '<option value="">Error al cargar las series</option>';
+                }
+            }
+        };
+        xhr.send("modelo=" + encodeURIComponent(modeloSeleccionado));
+    }
+</script>
 </div>
 </body>
 </html>
