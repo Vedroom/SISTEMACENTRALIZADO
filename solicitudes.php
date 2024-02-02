@@ -47,7 +47,7 @@
 
 <body>
   <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow navegador">
-    <a href="#" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png" alt=""
+    <a href="menu.php" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png" alt=""
         class="imglogo"></a>
     <ul class="navbar-nav px-3 ml-auto"> <!-- Utiliza 'ml-auto' para alinear a la derecha -->
       <li class="nav-item text-nowrap">
@@ -83,7 +83,7 @@
               </a>
               <ul class="list-group collapse fade" id="ventasCollapse">
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="#">Item 1</a>
+                  <a class="btn btn-sm btn-block text-left" href="ventas_tractores.php">Tractores</a>
                 </li>
                 <li class="list-group-item" id="nivel2">
                   <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>
