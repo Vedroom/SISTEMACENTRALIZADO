@@ -49,11 +49,7 @@
   <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow navegador">
     <a href="#" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png" alt=""
         class="imglogo"></a>
-    <button class="navbar-toggler position-absolute d-md-none collapesed" type="button" data-toggle="collapse"
-      data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanden="false" aria-label="Toggle navegation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <ul class="navbar-nav px-3">
+    <ul class="navbar-nav px-3 ml-auto"> <!-- Utiliza 'ml-auto' para alinear a la derecha -->
       <li class="nav-item text-nowrap">
         <?php
         session_start();
@@ -67,10 +63,13 @@
         <!------------------------Identificacion del usuario de la sesion------------->
         <p style="color: aliceblue;">
           <?php echo $_SESSION["nombre"]; ?>
+          <img id="imgNotificaciones" src="img/notification_false.png" alt="Icono de Notificaciones" data-toggle="modal"
+            data-target="#notificacionesModal" style="cursor: pointer; width:5%;">
         </p>
       </li>
     </ul>
   </nav>
+
   <!---------------------------Navegador vertical-------------------------------------------->
   <div class="container-fluid">
     <div class="row">
@@ -177,8 +176,26 @@
   $numero_de_proyectos = mysqli_num_rows($resultado_primer_solicitud);
   $ultima_id = $primer_id + ($numero_solicitudes - 1);
   $indice = 1;
-  ?>
 
+  #PROCESAMIENTO DE DATOS PARA OBTENER LA INFORMACION DE NOTIFICACIONES
+  $cuenta_notificaciones = "SELECT * FROM  logsolicitudes";
+  $resultado_busca_logs = mysqli_query($con, $cuenta_notificaciones);
+  $numero_logs = mysqli_num_rows($resultado_busca_solicitudes);
+
+  //Consultando la id de la primer solicitud para empezar la consulta desde ahí
+  $consulta_primer_log = "SELECT * FROM `logsolicitudes`";
+  $resultado_primer_log = mysqli_query($con, $consulta_primer_log);
+  $registro_primer_log = mysqli_fetch_array($resultado_primer_log, MYSQLI_ASSOC);
+  $id_primer_log = $registro_primer_log['id'];
+
+  //Obteniendo la ultima id para parar
+  $numero_logs = mysqli_num_rows($resultado_primer_log);
+  $id_ultimo_log = $id_primer_log + ($numero_logs - 1);
+  $topeLog = $id_ultimo_log - 4;
+
+
+
+  ?>
   <div class="container">
     <table class="table table-hover">
       <thead>
@@ -193,7 +210,6 @@
         </tr>
       </thead>
       <tbody>
-
         <?php
 
         //Indice para numerar los renglones
@@ -215,6 +231,8 @@
           }
         }
 
+
+
         //Define la clase dependiendo la prioridad asignada
         function asignarClasePrioridad($estado)
         {
@@ -230,7 +248,7 @@
               return 'bg-default';
           }
         }
-    
+
         //Recorre los registros
         for ($primer_id; $primer_id <= $ultima_id; $primer_id++) {
 
@@ -252,7 +270,6 @@
           // Define la clase del registro, segun su estado/prioridad
           $claseEstado = asignarClaseEstado($estado);
           $clasePrioridad = asignarClasePrioridad($prioridad);
-
 
           ?>
 
@@ -304,8 +321,10 @@
       </tbody>
     </table>
   </div>
-
   <!-----------------------------Contenido principal------------------------------->
+  <!-----------------------------Ventana de Notificaciones------------------------------->
+  <?php include("notificaciones.php"); ?>
+  <!-----------------------------Ventana de Notificaciones------------------------------->
 </body>
 
 </html>
