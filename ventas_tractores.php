@@ -197,7 +197,7 @@ $idUsuario = $_SESSION["id"];
         <!-- Campo oculto para enviar el ID del usuario -->
         <input type="hidden" name="id_usuario" value="<?php echo $idUsuario; ?>">
 
-        <input type="submit" value="Subir Venta">
+        <input type="submit" class="btn btn-primary" value="Subir Venta">
     </form>
     <script>
     function cargarModelos() {

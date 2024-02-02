@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-02-2024 a las 16:56:06
+-- Tiempo de generación: 02-02-2024 a las 20:08:52
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -247,6 +247,14 @@ CREATE TABLE `ventas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
+-- Volcado de datos para la tabla `ventas`
+--
+
+INSERT INTO `ventas` (`id_venta`, `id_usuario`, `id_serie`, `id_modelo`, `cantidad`, `precio`, `fecha`, `total`) VALUES
+(3, 1, 38, 4, 2, 1500.00, '2024-02-02', 3000.00),
+(4, 1, 67, 17, 5, 1500.00, '2024-02-02', 7500.00);
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -305,7 +313,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
