@@ -97,10 +97,10 @@
               </a>
               <ul class="list-group collapse fade" id="ventasCollapse">
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="ventas_tractores.php">Tractores</a>
+                  <a class="btn btn-sm btn-block text-left" href="altas_tractores.php">Tractores</a>
                 </li>
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>
+                  <a class="btn btn-sm btn-block text-left" href="altas_ref.php">Refacciones</a>
                 </li>
               </ul>
             </li>
