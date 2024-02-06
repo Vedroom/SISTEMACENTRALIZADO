@@ -152,12 +152,15 @@
 <div class="container formularios">
     <h1><strong>Ventas de refacciones</strong></h1>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
-        <label for="archivo_excel">Selecciona un archivo Excel:</label>
-        <input type="file" name="archivo_excel" accept=".xlsx, .xls">
+        <div class="form-group">
+            <label for="archivo_excel">Selecciona un archivo Excel:</label>
+            <input type="file" class="form-control-file" name="archivo_excel" accept=".xlsx, .xls">
+        </div>
         <br>
-        <input type="submit" value="Leer Excel y Subir a la Base de Datos">
+        <button type="submit" class="btn btn-primary">Leer Excel y Subir a la Base de Datos</button>
     </form>
 </div>
+
 <?php
 require 'vendor/autoload.php'; // Incluye PhpSpreadsheet
 
