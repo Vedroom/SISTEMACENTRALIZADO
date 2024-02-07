@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard de refacciones</title>
     <link rel="shortcut icon" href="img/3 PRUEBA-12.png" type="image/x-icon">
     <!-- Favicons -->
 <link rel="apple-touch-icon" href="/docs/4.6/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -27,16 +27,6 @@
         }
         .boton a{
           text-decoration: none;
-        }
-        .formularios{
-             padding-left: 332px;
-            }
-        
-        input[type=text] {
-          width: 100%;
-          padding: 12px 20px;
-          margin: 8px 0;
-          box-sizing: border-box;
         }
       </style>
 </head>
@@ -62,8 +52,8 @@
             </li>
         </ul>
     </nav>
-<!---------------------------Navegador vertical-------------------------------------------->
-<div class="container-fluid">
+    <!---------------------------Navegador vertical-------------------------------------------->
+  <div class="container-fluid">
     <div class="row">
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
         <div class="sidebar-sticky pt-3">
@@ -75,10 +65,10 @@
               </a>
               <ul class="list-group collapse fade" id="ventasCollapse">
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="altas_tractores.php">Tractores</a>
+                  <a class="btn btn-sm btn-block text-left" href="#">Item 1</a>
                 </li>
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="altas_ref.php">Refacciones</a>
+                  <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>
                 </li>
               </ul>
             </li>
@@ -90,10 +80,10 @@
               </a>
               <ul class="list-group collapse fade" id="dashboardCollapse">
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="#">Item 1</a>
+                  <a class="btn btn-sm btn-block text-left" href="altas_tractores.php">Tractores</a>
                 </li>
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>
+                  <a class="btn btn-sm btn-block text-left" href="altas_ref.php">Refacciones</a>
                 </li>
               </ul>
             </li>
@@ -148,83 +138,7 @@
     });
   </script>
   <!---------------------------Navegador vertical-------------------------------------------->
-<!-----------------------------Alta de usuarios------------------------------------------>
-<div class="container formularios">
-    <h1><strong>Ventas de refacciones</strong></h1>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="archivo_excel">Selecciona un archivo Excel:</label>
-            <input type="file" class="form-control-file" name="archivo_excel" accept=".xlsx, .xls">
-        </div>
-        <br>
-        <button type="submit" class="btn btn-primary">Leer Excel y Subir a la Base de Datos</button>
-    </form>
-</div>
-
-<?php
-require 'vendor/autoload.php'; // Incluye PhpSpreadsheet
-
-// Configuración de la base de datos (ajusta según tu configuración)
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "mavepo";
-
-// Función para leer y mostrar datos desde un archivo Excel
-function leerExcel($archivoTemporal, $conn) {
-    try {
-        $hojaCalculo = \PhpOffice\PhpSpreadsheet\IOFactory::load($archivoTemporal);
-        $datosHoja = $hojaCalculo->getActiveSheet()->toArray(null, true, true);
-
-        echo "<table border='1' class='container formulario'>";
-        // Preparar la consulta SQL para la inserción de datos
-        $sql = "INSERT INTO ventas_ref (Falta_fac, Total_fac, Cse_prod, Cve_prod, Valor_prod, Cant_surt, Cve_suc, Desc_prod, Cost_prom, Lugar, Nom_age) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-
-        foreach ($datosHoja as $fila) {
-            echo "<tr>";
-            foreach ($fila as $celda) {
-                echo "<td>" . htmlspecialchars($celda) . "</td>";
-            }
-            echo "</tr>";
-
-            // Ejecutar la consulta preparada para insertar los datos en la base de datos
-            $stmt->bind_param("sssssssssss", $fila[0], $fila[1], $fila[2], $fila[3], $fila[4], $fila[5], $fila[6], $fila[7], $fila[8], $fila[9], $fila[10]);
-            $stmt->execute();
-        }
-        echo "</table>";
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
-    }
-}
-
-// Manejo de la subida del archivo
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["archivo_excel"])) {
-    $archivoTemporal = $_FILES["archivo_excel"]["tmp_name"];
-
-    // Verificación de la subida del archivo
-    if (is_uploaded_file($archivoTemporal)) {
-        // Mostrar información de depuración
-        echo "Archivo subido correctamente. Ruta temporal: $archivoTemporal<br>";
-        
-
-        // Conexión a la base de datos
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Verificar la conexión
-        if ($conn->connect_error) {
-            die("Error de conexión a la base de datos: " . $conn->connect_error);
-        }
-
-        // Llamada a la función para leer y mostrar datos
-        leerExcel($archivoTemporal, $conn);
-
-        // Cerrar la conexión a la base de datos
-        $conn->close();
-    } else {
-        echo "Error al subir el archivo.";
-    }
-}
-?>
+<!-----------------------------Tablas y graficas del dashboard------------------------------->
+<!-----------------------------Tablas y graficas del dashboard------------------------------->
 </body>
 </html>

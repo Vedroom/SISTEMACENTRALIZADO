@@ -150,7 +150,7 @@
   <!---------------------------Navegador vertical-------------------------------------------->
 <!-----------------------------Alta de usuarios------------------------------------------>
 <div class="container formularios">
-    <h1><strong>Ventas de refacciones</strong></h1>
+    <h1><strong>Ventas de tractores</strong></h1>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="archivo_excel">Selecciona un archivo Excel:</label>
@@ -178,7 +178,7 @@ function leerExcel($archivoTemporal, $conn) {
 
         echo "<table border='1' class='container formulario'>";
         // Preparar la consulta SQL para la inserción de datos
-        $sql = "INSERT INTO ventas (Falta_fac, Total_fac, Cse_prod, Cve_prod, Valor_prod, Cant_surt, Cve_suc, Desc_prod, Cost_prom, Lugar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO ventas (Falta_fac, Total_fac, Cse_prod, Cve_prod, Valor_prod, Cant_surt, Cve_suc, Desc_prod, Cost_prom, Lugar, Nom_age) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
 
         foreach ($datosHoja as $fila) {
@@ -189,7 +189,7 @@ function leerExcel($archivoTemporal, $conn) {
             echo "</tr>";
 
             // Ejecutar la consulta preparada para insertar los datos en la base de datos
-            $stmt->bind_param("ssssssssss", $fila[0], $fila[1], $fila[2], $fila[3], $fila[4], $fila[5], $fila[6], $fila[7], $fila[8], $fila[9]);
+            $stmt->bind_param("sssssssssss", $fila[0], $fila[1], $fila[2], $fila[3], $fila[4], $fila[5], $fila[6], $fila[7], $fila[8], $fila[9], $fila[10]);
             $stmt->execute();
         }
         echo "</table>";
