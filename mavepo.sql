@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-02-2024 a las 19:18:55
+-- Tiempo de generación: 07-02-2024 a las 21:29:25
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -106,7 +106,8 @@ CREATE TABLE `ventas` (
   `Cve_suc` varchar(50) DEFAULT NULL,
   `Desc_prod` varchar(255) DEFAULT NULL,
   `Cost_prom` decimal(10,2) DEFAULT NULL,
-  `Lugar` varchar(100) DEFAULT NULL
+  `Lugar` varchar(100) DEFAULT NULL,
+  `Nom_age` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -125,7 +126,8 @@ CREATE TABLE `ventas_ref` (
   `Cve_suc` varchar(50) DEFAULT NULL,
   `Desc_prod` varchar(255) DEFAULT NULL,
   `Cost_prom` decimal(10,2) DEFAULT NULL,
-  `Lugar` varchar(100) DEFAULT NULL
+  `Lugar` varchar(100) DEFAULT NULL,
+  `Nom_age` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
