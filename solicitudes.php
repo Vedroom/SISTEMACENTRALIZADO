@@ -316,15 +316,16 @@
             });
           });
         </script>
-
-
       </tbody>
     </table>
   </div>
   <!-----------------------------Contenido principal------------------------------->
   <!-----------------------------Ventana de Notificaciones------------------------------->
-  <?php include("notificaciones.php"); ?>
+  <?php
+  $id_rol = $_SESSION['id_rol'];
+  $usuario = $_SESSION['usuario'];
+  include("notificaciones.php");
+  ?>
   <!-----------------------------Ventana de Notificaciones------------------------------->
 </body>
-
 </html>

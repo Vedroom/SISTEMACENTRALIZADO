@@ -18,13 +18,13 @@
     <!-------------------Login------------------------------------------------------>
     <form action="login.php" method="POST" class="form-signin"><!---Envia los datos al archivo login.php mediante el metodo POST-->
         <img src="img/Massey-mavepoLOGOBLANCO.png" alt="" class="mb-4" height="72">
-        <h1 class="h3 mb-3 font-weight-normal" style="color: aliceblue;"><strong>Iniciar sesion</strong></h1>
+        <h1 class="h3 mb-3 font-weight-normal" style="color: aliceblue;"><strong>Iniciar sesión</strong></h1>
         <label for="inputEmail" class="sr-only"></label>
         <input type="text" id="inputEmail" name="usuario" class="form-control" placeholder="Usuario" required autofocus>
         <br>
         <label for="inputPassword" class="sr-only"></label>
         <input type="password" id="inputPassword" class="form-control" name="contrasena" placeholder="Contraseña" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesion</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
         <p class="mt-5 mb-3 text-muted">&copy; <span style="color: aliceblue;"><strong>Mavepo 2024</strong></span> </p>
     </form>
     <!-------------------Login-------------------------------------------------------->

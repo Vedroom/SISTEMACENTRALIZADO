@@ -43,6 +43,9 @@
       text-decoration: none;
     }
   </style>
+  <?php      
+        include("db.php");
+        ?>
 </head>
 
 <body>
@@ -57,6 +60,7 @@
       <li class="nav-item text-nowrap">
         <?php
         session_start();
+        include("db.php");
         // Verificar si el usuario ha iniciado sesión
         if (!isset($_SESSION["usuario"])) {
           // Si no ha iniciado sesión, redirigir al formulario de inicio de sesión
@@ -67,6 +71,8 @@
         <!------------------------Identificacion del usuario de la sesion------------->
         <p style="color: aliceblue;">
           <?php echo $_SESSION["nombre"]; ?>
+          <img id="imgNotificaciones" src="img/notification_false.png" alt="Icono de Notificaciones" data-toggle="modal"
+            data-target="#notificacionesModal" style="cursor: pointer; width:5%;">
         </p>
       </li>
     </ul>
@@ -121,6 +127,7 @@
               </ul>
             </li>
             <?php
+            
             if ($_SESSION["id_rol"] == 1) {
               echo '<li class="nav-item">
                                   <a class="nav-link" href="configuracion.php">
@@ -242,8 +249,13 @@
       </div>
     </div>
   </div>
-
   <!-----------------------------Contenido principal------------------------------->
+  <!-----------------------------Ventana de Notificaciones------------------------------->
+  <?php
+  $id_rol = $_SESSION['id_rol'];
+  $usuario = $_SESSION['usuario'];
+  include("notificaciones.php");
+  ?>
+  <!-----------------------------Ventana de Notificaciones------------------------------->
 </body>
-
 </html>

@@ -35,9 +35,9 @@ $nombreSolicitud = $_POST["nombreSolicitud"];
 $descripcion = $_POST["desc"];
 $presupuesto = $_POST['presupuesto'];
 $prioridad = $_POST['prioridad'];
-date_default_timezone_set('America/Mexico_City'); // Reemplaza 'America/New_York' con tu zona horaria
+date_default_timezone_set('America/Mexico_City'); 
 $fechaHoy = date("d/m/Y"); // Formato: Año-Mes-Día
-$fechaHoraActual = date('d/m/Y H:ii');
+$fechaHoraActual = date('d/m/Y H:i');
 $estadoInicial = "En curso";
 $responsable = $_SESSION["usuario"];
 echo "$nombreSolicitud";
