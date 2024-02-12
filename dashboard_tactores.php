@@ -19,6 +19,10 @@
      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
       <!----------------------Bootstrap--------------------------------------->
+      <!-----------google charts--------------------------------->
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script type="text/javascript" src="js/script.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <link rel="stylesheet" href="css/styledasg.css">
       <style>
         .boton{
@@ -28,6 +32,10 @@
         .boton a{
           text-decoration: none;
         }
+        .formularios{
+             padding-left: 332px;
+            }
+        
       </style>
 </head>
 <body>
@@ -139,6 +147,32 @@
   </script>
   <!---------------------------Navegador vertical-------------------------------------------->
 <!-----------------------------Tablas y graficas del dashboard------------------------------->
+<div class="formularios">
+<h2>Generar Gráfico de Pastel de Ventas</h2>
+    <!-- Filtros -->
+    <label for="fechaInicio">Fecha de Inicio:</label>
+    <input type="date" id="fechaInicio" name="fechaInicio">
+
+    <label for="fechaFin">Fecha de Fin:</label>
+    <input type="date" id="fechaFin" name="fechaFin">
+
+    <label for="codigoProducto">Código del Producto:</label>
+    <input type="text" id="codigoProducto" name="codigoProducto">
+
+    <label for="claveSucursal">Clave de la Sucursal:</label>
+    <input type="text" id="claveSucursal" name="claveSucursal">
+
+    <label for="nombreAgente">Nombre del Agente:</label>
+    <input type="text" id="nombreAgente" name="nombreAgente">
+
+    <button type="button" onclick="generatePieChart()">Generar Gráfico de Pastel</button>
+
+    <div>
+        <canvas id="pieChart"></canvas>
+    </div>
+
+    <script src="js/script.js"></script>
+</div>
 <!-----------------------------Tablas y graficas del dashboard------------------------------->
 </body>
 </html>
