@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Detalle de solicitud</title>
   <link rel="shortcut icon" href="img/3 PRUEBA-12.png" type="image/x-icon">
   <!-- Favicons -->
-  <link rel="apple-touch-icon" href="/docs/4.6/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+  <!--<link rel="apple-touch-icon" href="/docs/4.6/assets/img/favicons/apple-touch-icon.png" sizes="180x180"> -->
   <link rel="icon" href="/docs/4.6/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-  <link rel="icon" href="/docs/4.6/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+  <!--<link rel="icon" href="/docs/4.6/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png"> -->
   <link rel="manifest" href="/docs/4.6/assets/img/favicons/manifest.json">
   <link rel="mask-icon" href="/docs/4.6/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
-  <link rel="icon" href="/docs/4.6/assets/img/favicons/favicon.ico">
+  <!--<link rel="icon" href="/docs/4.6/assets/img/favicons/favicon.ico"> -->
   <!----------------------Bootstrap---------------------------------------->
+  <!-- Include jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Include Bootstrap JS (after jQuery) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
     integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
@@ -43,15 +46,14 @@
       text-decoration: none;
     }
   </style>
-  <?php      
-        include("db.php");
-        ?>
+  <?php
+  include("db.php");
+  ?>
 </head>
-
 <body>
   <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow navegador">
-    <a href="menu.php" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png" alt=""
-        class="imglogo"></a>
+    <a href="menu.php" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png"
+        alt="" class="imglogo"></a>
     <button class="navbar-toggler position-absolute d-md-none collapesed" type="button" data-toggle="collapse"
       data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanden="false" aria-label="Toggle navegation">
       <span class="navbar-toggler-icon"></span>
@@ -127,7 +129,6 @@
               </ul>
             </li>
             <?php
-            
             if ($_SESSION["id_rol"] == 1) {
               echo '<li class="nav-item">
                                   <a class="nav-link" href="configuracion.php">
@@ -148,7 +149,6 @@
       </nav>
     </div>
   </div>
-
   <script>
     //Desplegar opciones respectivas
     $(document).ready(function () {
@@ -173,16 +173,16 @@
 
   //Obtén el nombre del registro desde la URL
   $nombreSolicitud = $_GET['nombre'];
-  
+
   //Realiza una consulta para obtener los detalles del registro con el nombre
   $busca_solicitud = "SELECT * FROM `solicitudes` WHERE nombreSolicitud='$nombreSolicitud'";
   $result = mysqli_query($con, $busca_solicitud);
-  $row = mysqli_fetch_array($result, MYSQLI_ASSOC); 
+  $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
   //Separa la información faltante  en campos 
   $descripcion = $row['descripcion'];
   $responsable = $row['responsable'];
-  $fecha =  $row['fecha'];
+  $fecha = $row['fecha'];
   $estado = $row['estado'];
   $presupuesto = $row['presupuesto'];
   $prioridad = $row['prioridad'];
@@ -223,29 +223,47 @@
   $claseEstado = asignarClaseEstado($estado);
   $clasePrioridad = asignarClasePrioridad($prioridad);
 
-  ?> 
+  ?>
   <div class="container">
     <div class="informacion-solicitud">
       <div class="solicitud-card">
         <div class="solicitud-details">
           <div class="solicitud-title">
-            <div> <?php echo mb_strtoupper($nombreSolicitud, 'UTF-8'); ?></div>
-            <div class="<?php echo $claseEstado; ?>"> <?php echo $estado; ?></div>
-            <div class="<?php echo $clasePrioridad; ?>"> Prioridad <?php echo $prioridad; ?></div>
+            <div>
+              <?php echo mb_strtoupper($nombreSolicitud, 'UTF-8'); ?>
+            </div>
+            <div class="<?php echo $claseEstado; ?>">
+              <?php echo $estado; ?>
+            </div>
+            <div class="<?php echo $clasePrioridad; ?>"> Prioridad
+              <?php echo $prioridad; ?>
+            </div>
           </div>
           <div class="solicitud-info">
-            Fecha de realización: <span>   <?php echo $fecha; ?> </span>
+            Fecha de realización: <span>
+              <?php echo $fecha; ?>
+            </span>
           </div>
           <div class="solicitud-info">
-            Responsable: <span>  <?php echo $responsable; ?></span>
+            Responsable: <span>
+              <?php echo $responsable; ?>
+            </span>
           </div>
           <div class="solicitud-info">
-            Presupuesto estimado: <span>$<?php echo $presupuesto;?></span>
+            Presupuesto estimado: <span>$
+              <?php echo $presupuesto; ?>
+            </span>
           </div>
           <div class="solicitud-description">
-            <?php echo $descripcion;?>
+            <?php echo $descripcion; ?>
           </div>
         </div>
+      </div>
+      <div id="archivo" class="solicitud-card">
+        <?php
+        // Muestra el archivo de cotización
+        include 'verArchivos.php';
+        ?>
       </div>
     </div>
   </div>
@@ -258,4 +276,5 @@
   ?>
   <!-----------------------------Ventana de Notificaciones------------------------------->
 </body>
+
 </html>

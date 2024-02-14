@@ -43,6 +43,15 @@
       text-decoration: none;
     }
   </style>
+  <?php
+// Recuperar el mensaje de la URL
+$mensaje = isset($_GET['mensaje']) ? $_GET['mensaje'] : '';
+
+// Mostrar la alerta en JavaScript
+if ($mensaje) {
+    echo "<script>alert('$mensaje');</script>";
+}
+?>
 </head>
 
 <body>

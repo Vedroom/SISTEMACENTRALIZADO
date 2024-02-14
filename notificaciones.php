@@ -98,8 +98,8 @@
                   $usuarioLog = $row["usuario"];
                   $accionLog = $row["accion"];
                   $solicitudLog = $row["solicitud"];
-
                   ?>
+                  
                   <script>
                     console.log("<?php echo $fechaLog . " " . $usuarioLog . " " . $accionLog . " " . $solicitudLog; ?>")
                   </script>

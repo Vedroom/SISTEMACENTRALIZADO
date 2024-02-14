@@ -3,6 +3,4 @@
 // Si no ha establecido la contraseña de la base de datos en localhost, entonces póngala vacía.
 $con = mysqli_connect("localhost", "root", "", "mavepo");
 // Check connection
-if (mysqli_connect_errno()) {
-    echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
+?> 

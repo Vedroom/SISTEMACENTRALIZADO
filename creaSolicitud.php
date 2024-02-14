@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,8 +55,8 @@
 
 <body>
   <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow navegador">
-    <a href="menu.php" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png" alt=""
-        class="imglogo"></a>
+    <a href="menu.php" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png"
+        alt="" class="imglogo"></a>
     <button class="navbar-toggler position-absolute d-md-none collapesed" type="button" data-toggle="collapse"
       data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanden="false" aria-label="Toggle navegation">
       <span class="navbar-toggler-icon"></span>
@@ -74,7 +75,7 @@
         <!------------------------Identificacion del usuario de la sesion------------->
         <p style="color: aliceblue;">
           <?php echo $_SESSION["nombre"]; ?>
-          
+
         </p>
       </li>
     </ul>
@@ -165,22 +166,22 @@
     });
 
     function validarFormulario() {
-    var prioridad = document.getElementById("prioridad").value;
+      var prioridad = document.getElementById("prioridad").value;
 
-    if (prioridad === "") {
-      alert("Por favor, selecciona una prioridad válida.");
-      return false; // Evitar el envío del formulario
+      if (prioridad === "") {
+        alert("Por favor, selecciona una prioridad válida.");
+        return false; // Evitar el envío del formulario
+      }
+      return true; // Permitir el envío del formulario si se ha seleccionado una prioridad válida
     }
-    return true; // Permitir el envío del formulario si se ha seleccionado una prioridad válida
-  }
 
-  // Obtener el formulario y agregar un escucha de evento submit
-  document.getElementById("datosSolicitud").addEventListener("submit", function (event) {
-    // Validar el formulario antes del envío
-    if (!validarFormulario()) {
-      event.preventDefault(); // Evitar el envío del formulario
-    }
-  });
+    // Obtener el formulario y agregar un escucha de evento submit
+    document.getElementById("datosSolicitud").addEventListener("submit", function (event) {
+      // Validar el formulario antes del envío
+      if (!validarFormulario()) {
+        event.preventDefault(); // Evitar el envío del formulario
+      }
+    });
 
   </script>
   <!---------------------------Navegador vertical-------------------------------------------->
@@ -188,7 +189,7 @@
   <!-----------------------------Alta de usuarios------------------------------------------>
   <div class="container mt-5 formularios">
     <h2 class="mb-4">Crear solicitud</h2>
-    <form id="datosSolicitud" action="procesar_alta_solicitud.php" onsubmit="return validarFormulario();" method="post">
+    <form id="datosSolicitud" action="procesar_alta_solicitud.php" onsubmit="return validarFormulario();" method="post" enctype="multipart/form-data">
       <!--------------------------Usuario---------------------------->
       <div class="form-group">
         <label for="nombreSolicitud">Nombre de Solicitud:</label>
@@ -199,20 +200,45 @@
         <label for="descripcion">Descripción:</label>
         <input type="text" class="form-control" name="desc" required>
       </div>
-      <!----------------------------Nombre del usuario---------------------------------->
+      <!----------------------------Presupuesto estimado---------------------------------->
       <div class="form-group">
         <label for="nombre">Presupuesto:</label>
         <input type="number" class="form-control" name="presupuesto" required>
       </div>
       <!----------------------------Prioridad------------------------------------------->
-      <label for="Prioridad">Prioridad:</label>
-      <select name="prioridad" id="prioridad">
-        <option value="" selected disabled>Selecciona la prioridad</option>
-        <option value="Alta">Alta</option>
-        <option value="Media">Media</option>
-        <option value="Baja">Baja</option>
-      </select><br>
-      <!-- Botones del formulario -->
+      <div class="form-group">
+        <label for="Prioridad">Prioridad:</label>
+        <select name="prioridad" id="prioridad">
+          <option value="" selected disabled>Selecciona la prioridad</option>
+          <option value="Alta">Alta</option>
+          <option value="Media">Media</option>
+          <option value="Baja">Baja</option>
+        </select><br>
+      </div>
+      <!----------------------------Archivo de cotización------------------------------->
+      <div class="file-input-container">
+        <label for="Prioridad">Archivo de cotización:</label><br>
+        <label for="archivo" class="upload-btn">
+          <span class="upload-icon">📂</span>
+          <span class="upload-text" id="nameDoc">Seleccionar Archivo</span>
+        </label>
+        <input type="file" name="archivo" id="archivo" class="inputfile" acept=".pdf" required>
+      </div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          // Obtener el input de tipo archivo y el elemento de nombre del archivo
+          const fileInput = document.getElementById('archivo');
+          const contenedor = document.getElementById("nameDoc");
+
+          // Agregar un escucha de eventos para el cambio en el input de archivo
+          fileInput.addEventListener('change', function () {
+            // Actualizar el nombre del archivo en el elemento de visualización            
+            contenedor.textContent =fileInput.files[0].name;
+          });
+        });
+      </script>
+      <!-------------------- Botones del formulario ------------------------------------->
       <div class="form-group">
         <button type="submit" class="btn btn-primary">Registrar</button>
         <a href="#" class="btn btn-secondary" onclick="window.history.back();">Cancelar</a>
@@ -222,4 +248,5 @@
 
   <!---------------------------Contenido principal-------------------------------------------->
 </body>
+
 </html>

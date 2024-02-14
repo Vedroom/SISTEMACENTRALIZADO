@@ -1,19 +1,13 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "mavepo";
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $database);
+include("db.php");
 
 // Verificar la conexión
-if ($conn->connect_error) {
-    die("La conexión a la base de datos ha fallado: " . $conn->connect_error);
+if ($con->connect_error) {
+    die("La conexión a la base de datos ha fallado: " . $con->connect_error);
 }
 
-#PROCESAMIENTO DE DATOS, PARA OBTENER LOS REGISTROS DE SOLICITUD
-include("db.php");
+#PROCESAMIENTO DE DATOS, PARA OBTENER LOS REGISTROS
 $cuenta_solicitudes = "SELECT * FROM  solicitudes";
 $resultado_busca_solicitudes = mysqli_query($con, $cuenta_solicitudes);
 $numero_solicitudes = mysqli_num_rows($resultado_busca_solicitudes);
@@ -24,59 +18,75 @@ $resultado_primer_solicitud = mysqli_query($con, $consulta_primer_solicitud);
 $registro_primer_solicitud = mysqli_fetch_array($resultado_primer_solicitud, MYSQLI_ASSOC);
 $primer_id = $registro_primer_solicitud['id'];
 
-//Obteniendo la ultima id para parar
+//Obteniendo la ultima id solicitudes para parar
 $numero_de_proyectos = mysqli_num_rows($resultado_primer_solicitud);
 $ultima_id = $primer_id + ($numero_solicitudes - 1);
 $siguienteId = 1 + $ultima_id;
 
-// Recuperar datos del formulario
+//Consultando la id del primer logsolicitud para empezar la consulta desde ahí
+$consulta_primer_logsolicitud = "SELECT * FROM `logsolicitudes`";
+$resultado_busca_logs = mysqli_query($con, $consulta_primer_logsolicitud);
+$numero_logs = mysqli_num_rows($resultado_busca_logs);
+$resultado_primer_logsolicitud = mysqli_query($con, $consulta_primer_logsolicitud);
+$registro_primer_logsolicitud = mysqli_fetch_array($resultado_primer_logsolicitud, MYSQLI_ASSOC);
+$primer_id_logsolicitud = $registro_primer_logsolicitud['id'];
+
+//Obteniendo la ultima id solicitudes para parar
+$numero_de_logs = mysqli_num_rows($resultado_busca_logs);
+$ultima_id_log = $primer_id_logsolicitud + ($numero_logs - 1);
+$siguienteIdLog = 1 + $ultima_id_log;
+
+#Recuperar datos del formulario
 session_start();
 $nombreSolicitud = $_POST["nombreSolicitud"];
 $descripcion = $_POST["desc"];
 $presupuesto = $_POST['presupuesto'];
 $prioridad = $_POST['prioridad'];
-date_default_timezone_set('America/Mexico_City'); 
+date_default_timezone_set('America/Mexico_City');
 $fechaHoy = date("d/m/Y"); // Formato: Año-Mes-Día
 $fechaHoraActual = date('d/m/Y H:i');
 $estadoInicial = "En curso";
 $responsable = $_SESSION["usuario"];
-echo "$nombreSolicitud";
+$nombre_archivo = $con->real_escape_string($_FILES['archivo']['name']);
+$archivo_contenido = base64_encode(file_get_contents($_FILES['archivo']['tmp_name']));
 
-// Insertar datos en la tabla Solicitudes
+// Insertar datos en tablas respectivas
 try {
+    // Iniciar transacción
+    $con->begin_transaction();
+
+    /**
+     * --Configura max_allowed_packet a 64 megabytes
+     * SET GLOBAL max_allowed_packet = 67108864;
+     * -- Reinicia el servidor MySQL
+     * FLUSH PRIVILEGES;
+     */
+
     // Query de inserción en la primera tabla (solicitudes)
-    $sql1 = "INSERT INTO solicitudes (id, nombreSolicitud, descripcion, responsable, fecha, estado, presupuesto, prioridad) 
-                             VALUES ('$siguienteId', '$nombreSolicitud', '$descripcion', '$responsable', '$fechaHoy', '$estadoInicial', '$presupuesto', '$prioridad')";
+    $sql1 = "INSERT INTO solicitudes (id, nombreSolicitud, descripcion, responsable, fechaaaa, estado, presupuesto, prioridad) 
+             VALUES ('$siguienteId', '$nombreSolicitud', '$descripcion', '$responsable', '$fechaHoy', '$estadoInicial', '$presupuesto', '$prioridad')";
+    $con->query($sql1);
 
-    if ($conn->query($sql1) === TRUE) {
-        // Si la primera inserción fue exitosa, proceder con la segunda tabla
-        // Query de inserción en logsolicitudes
-        $sql2 = "INSERT INTO logsolicitudes (fecha, usuario, accion, solicitud) 
-                                     VALUES ('$fechaHoraActual', '$responsable', 'creacion', '$nombreSolicitud')";
+    // Query de inserción en la segunda tabla (logsolicitudes)
+    $sql2 = "INSERT INTO logsolicitudes (id, fecha, usuario, accion, solicitud) 
+             VALUES ('$siguienteIdLog' ,'$fechaHoraActual', '$responsable', 'creacion', '$nombreSolicitud')";
+    $con->query($sql2);
 
-        if ($conn->query($sql2) === TRUE) {
-            // Ambas inserciones fueron exitosas, confirmar la transacción
-            $conn->commit();            
-        } else {
-            // Si la segunda inserción falla, revertir la transacción
-            $conn->rollback();
-            $message = "Error en la segunda tabla, transacción revertida";
-        }
-    } else {
-        // Si la primera inserción falla, revertir la transacción
-        $conn->rollback();
-        $message = "Solicitud no creada, transacción revertida";
-    }
+    // Query de inserción en la tercera tabla (archivossolicitudes)
+    $sql3 = "INSERT INTO archivossolicitudes (nombreArchivo, solicitud, datosArchivo) 
+             VALUES ('$nombre_archivo', '$nombreSolicitud','$archivo_contenido')";
+    $con->query($sql3);
+
+    // Confirmar la transacción
+    $con->commit();
 
     // Redirigir al usuario a una página de confirmación
-    echo "<script type='text/javascript'>alert('$message');</script>";
-    header("Location: solicitudes.php");
+    echo "<script>alert('Solicitud creada correctamente');</script>";
+    header("Location: solicitudes.php?mensaje=Solicitud creada correctamente");
     exit();
 } catch (Exception $e) {
-    // Manejo de excepciones: revertir la transacción en caso de error
-    $conn->rollback();
+    // Manejo de excepciones: revertir la transacción en caso de error    
     echo "Error: " . $e->getMessage();
+    echo "<script>alert('Error: " . addslashes($e->getMessage()) . "');</script>";    
 }
-
-$conn ->close();
 ?>
