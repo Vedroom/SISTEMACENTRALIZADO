@@ -151,19 +151,106 @@
 <h2>Generar Gráfico de Pastel de Ventas</h2>
     <!-- Filtros -->
     <label for="fechaInicio">Fecha de Inicio:</label>
-    <input type="date" id="fechaInicio" name="fechaInicio">
+<input type="date" id="fechaInicio" name="fechaInicio">
 
-    <label for="fechaFin">Fecha de Fin:</label>
-    <input type="date" id="fechaFin" name="fechaFin">
+<label for="fechaFin">Fecha de Fin:</label>
+<input type="date" id="fechaFin" name="fechaFin">
 
-    <label for="codigoProducto">Código del Producto:</label>
-    <input type="text" id="codigoProducto" name="codigoProducto">
+<label for="codigoProducto">Código del Producto:</label>
+<select id="codigoProducto" name="codigoProducto">
+    <option value="">Selecciona un código de producto</option>
+    <?php
+    // Realizar la conexión a la base de datos (modifica con tus datos de conexión)
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "mavepo";
 
-    <label for="claveSucursal">Clave de la Sucursal:</label>
-    <input type="text" id="claveSucursal" name="claveSucursal">
+    // Crear conexión
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-    <label for="nombreAgente">Nombre del Agente:</label>
-    <input type="text" id="nombreAgente" name="nombreAgente">
+    // Verificar la conexión
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+
+    // Consulta para obtener los códigos de producto
+    $sql = "SELECT DISTINCT Cse_prod FROM ventas";
+    $result = $conn->query($sql);
+
+    // Imprimir opciones
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<option value='" . $row['Cse_prod'] . "'>" . $row['Cse_prod'] . "</option>";
+        }
+    }
+
+    // Cerrar conexión
+    $conn->close();
+    ?>
+</select>
+
+<label for="claveSucursal">Clave de la Sucursal:</label>
+<select id="claveSucursal" name="claveSucursal" onchange="cargarAgentes()">
+    <option value="">Selecciona una clave de sucursal</option>
+    <?php
+    // Crear conexión nuevamente
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Verificar la conexión
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+
+    // Consulta para obtener las claves de sucursal
+    $sql = "SELECT DISTINCT Cve_suc FROM ventas";
+    $result = $conn->query($sql);
+
+    // Imprimir opciones
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<option value='" . $row['Cve_suc'] . "'>" . $row['Cve_suc'] . "</option>";
+        }
+    }
+
+    // Cerrar conexión
+    $conn->close();
+    ?>
+</select>
+
+<label for="nombreAgente">Nombre del Agente:</label>
+<select id="nombreAgente" name="nombreAgente">
+    <option value="">Selecciona un nombre de agente</option>
+    <!-- Las opciones de los agentes se cargarán dinámicamente aquí -->
+</select>
+
+<script>
+function cargarAgentes() {
+    var claveSucursal = document.getElementById("claveSucursal").value;
+    var nombreAgenteSelect = document.getElementById("nombreAgente");
+    // Limpiar opciones anteriores
+    nombreAgenteSelect.innerHTML = "<option value=''>Selecciona un nombre de agente</option>";
+
+    if (claveSucursal !== '') {
+        // Realizar la conexión a la base de datos nuevamente
+        var conn = new XMLHttpRequest();
+        conn.onreadystatechange = function() {
+            if (conn.readyState == 4 && conn.status == 200) {
+                // Procesar la respuesta y agregar opciones al select de nombres de agentes
+                var agentes = JSON.parse(conn.responseText);
+                agentes.forEach(function(agente) {
+                    var option = document.createElement("option");
+                    option.text = agente;
+                    option.value = agente;
+                    nombreAgenteSelect.add(option);
+                });
+            }
+        };
+        conn.open("GET", "obtener_agentes.php?clave_sucursal=" + claveSucursal, true);
+        conn.send();
+    }
+}
+</script>
 
     <button type="button" onclick="generatePieChart()">Generar Gráfico de Pastel</button>
 
