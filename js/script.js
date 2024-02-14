@@ -78,4 +78,4 @@ function updateChart(data) {
 generatePieChart();
 
 // Establecer un intervalo para actualizar el gráfico cada 60 segundos
-setInterval(generatePieChart, 60000); // 60000 milisegundos = 60 segundos
+//setInterval(generatePieChart, 60000); // 60000 milisegundos = 60 segundos

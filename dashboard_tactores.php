@@ -73,10 +73,10 @@
               </a>
               <ul class="list-group collapse fade" id="ventasCollapse">
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="#">Item 1</a>
+                  <a class="btn btn-sm btn-block text-left" href="dashboard_tactores.php">Tractores</a>
                 </li>
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>
+                  <a class="btn btn-sm btn-block text-left" href="altas_ref.php">Refacciones</a>
                 </li>
               </ul>
             </li>
@@ -147,17 +147,21 @@
   </script>
   <!---------------------------Navegador vertical-------------------------------------------->
 <!-----------------------------Tablas y graficas del dashboard------------------------------->
+<div class="form.group">
 <div class="formularios">
-<h2>Generar Gráfico de Pastel de Ventas</h2>
+<h2 style="text-align: center;"><strong>Dashboard de tractores</strong></h2>
     <!-- Filtros -->
     <label for="fechaInicio">Fecha de Inicio:</label>
-<input type="date" id="fechaInicio" name="fechaInicio">
+ <input type="date" id="fechaInicio" name="fechaInicio" class="form-control">
+ <br>
 
 <label for="fechaFin">Fecha de Fin:</label>
-<input type="date" id="fechaFin" name="fechaFin">
+<input type="date" id="fechaFin" name="fechaFin" class="form-control">
+
+<br>
 
 <label for="codigoProducto">Código del Producto:</label>
-<select id="codigoProducto" name="codigoProducto">
+<select id="codigoProducto" name="codigoProducto" class="form-control">
     <option value="">Selecciona un código de producto</option>
     <?php
     // Realizar la conexión a la base de datos (modifica con tus datos de conexión)
@@ -189,9 +193,10 @@
     $conn->close();
     ?>
 </select>
+<br>
 
 <label for="claveSucursal">Clave de la Sucursal:</label>
-<select id="claveSucursal" name="claveSucursal" onchange="cargarAgentes()">
+<select id="claveSucursal" name="claveSucursal" class="form-control" onchange="cargarAgentes()">
     <option value="">Selecciona una clave de sucursal</option>
     <?php
     // Crear conexión nuevamente
@@ -217,13 +222,13 @@
     $conn->close();
     ?>
 </select>
+<br>
 
 <label for="nombreAgente">Nombre del Agente:</label>
-<select id="nombreAgente" name="nombreAgente">
+<select id="nombreAgente" name="nombreAgente" class="form-control">
     <option value="">Selecciona un nombre de agente</option>
     <!-- Las opciones de los agentes se cargarán dinámicamente aquí -->
 </select>
-
 <script>
 function cargarAgentes() {
     var claveSucursal = document.getElementById("claveSucursal").value;
@@ -252,13 +257,15 @@ function cargarAgentes() {
 }
 </script>
 
-    <button type="button" onclick="generatePieChart()">Generar Gráfico de Pastel</button>
+    <br>
+    <button type="button" class="btn btn-primary" onclick="generatePieChart()">Generar Gráfico de Pastel</button>
 
     <div>
         <canvas id="pieChart"></canvas>
     </div>
 
     <script src="js/script.js"></script>
+</div>
 </div>
 <!-----------------------------Tablas y graficas del dashboard------------------------------->
 </body>
