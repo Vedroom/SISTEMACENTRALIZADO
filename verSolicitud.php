@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,6 +51,7 @@
   include("db.php");
   ?>
 </head>
+
 <body>
   <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow navegador">
     <a href="menu.php" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png"
@@ -254,16 +256,39 @@
               <?php echo $presupuesto; ?>
             </span>
           </div>
-          <div class="solicitud-description">
+          <div class="solicitud-info">
             <?php echo $descripcion; ?>
           </div>
         </div>
       </div>
+      <div class="solicitud-card">
+        <div class="solicitud-details">
+          <div class="solicitud-title">
+            <div>
+              Comentarios de Solicitud
+            </div>
+            <div></div>
+            <div id="btnComentario" class="clickeable">
+              Agregar comentario
+            </div>
+          </div>
+          <div class="solicitud-info">
+            <?php
+            //Muestra comentarios
+            include 'verComentarios.php';
+            ?>
+          </div>
+        </div>
+      </div>
       <div id="archivo" class="solicitud-card">
-        <?php
-        // Muestra el archivo de cotización
-        include 'verArchivos.php';
-        ?>
+        <div class="solicitud-details">
+          <div class="solicitud-info">
+            <?php
+            // Muestra el archivo de cotización
+            include 'verArchivos.php';
+            ?>
+          </div>
+        </div>
       </div>
     </div>
   </div>
