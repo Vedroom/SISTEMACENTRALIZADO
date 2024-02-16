@@ -90,7 +90,7 @@
               </a>
               <ul class="list-group collapse fade" id="dashboardCollapse">
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="#">Item 1</a>
+                  <a class="btn btn-sm btn-block text-left" href="dashboard_tactores.php">Tractores</a>
                 </li>
                 <li class="list-group-item" id="nivel2">
                   <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>
