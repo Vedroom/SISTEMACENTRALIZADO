@@ -1,27 +1,62 @@
-<!-- Botón o imagen de notificaciones -->
-<img src="img/3 PRUEBA-12.png" alt="Icono de Notificaciones" data-toggle="modal" data-target="#notificacionesModal" style="cursor: pointer;" class="img-fluid">
+<?php
+include("db.php");
 
-<!-- Modal de notificaciones -->
-<div class="modal fade" id="notificacionesModal" tabindex="-1" role="dialog" aria-labelledby="notificacionesModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="notificacionesModalLabel">Notificaciones</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col">
-            <!-- Contenido de las notificaciones -->
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Guardar cambios</button>
-      </div>
-    </div>
-  </div>
-</div>
+// Verificar la conexión
+if ($con->connect_error) {
+  die("La conexión a la base de datos ha fallado: " . $con->connect_error);
+}
+
+// Recibir datos del formulario y escaparlos
+$nombreSolicitud = $con->real_escape_string($_POST["nombreSolicitud"]);
+$accion = isset($_POST['accion']) ? $_POST['accion'] : '';
+
+try {
+  if ($accion == 'modificaComentario') {
+    $contenido = $con->real_escape_string($_POST["observacion"]);
+    $con->begin_transaction();
+
+    $query = "UPDATE solicitudes SET comentarios = '$contenido' WHERE nombresolicitud = '$nombreSolicitud';";
+
+    $con->query($query);
+
+    $con->commit();
+    echo "<script> 
+    alert('Actualización de observación exitosa' );
+    setTimeout(function(){ window.location.href = 'verSolicitud.php?nombre=$nombreSolicitud'; }, 0); </script>";
+    exit();
+
+  } else if ($accion == 'modificaEstado') {
+    $estadoNuevo = $con->real_escape_string($_POST["estadoNuevo"]);
+    $con->begin_transaction();
+
+    $query = "UPDATE solicitudes SET estado = '$estadoNuevo' WHERE nombresolicitud = '$nombreSolicitud';";
+
+    $con->query($query);
+
+    $con->commit();
+    echo "<script> 
+    alert('Actualización de estado exitosa' );
+    setTimeout(function(){ window.location.href = 'verSolicitud.php?nombre=$nombreSolicitud'; }, 0); </script>";
+    exit();
+  } else if ($accion == 'modificaPrioridad') {
+    $prioridadNueva = $con->real_escape_string($_POST["prioridadNueva"]);
+    $con->begin_transaction();
+
+    $query = "UPDATE solicitudes SET prioridad = '$prioridadNueva' WHERE nombresolicitud = '$nombreSolicitud';";
+
+    $con->query($query);
+
+    $con->commit();
+    echo "<script> 
+    alert('Actualización de prioridad exitosa' );
+    setTimeout(function(){ window.location.href = 'verSolicitud.php?nombre=$nombreSolicitud'; }, 0); </script>";
+    exit();
+  }
+} catch (Exception $e) {
+  // Hubo un error en la ejecución de la consulta
+  echo "<script> alert('Error al actualizar " . addslashes($e->getMessage()) . "');</script>";
+  // ... Puedes manejar el error de alguna manera
+}
+
+$con->close();
+?>

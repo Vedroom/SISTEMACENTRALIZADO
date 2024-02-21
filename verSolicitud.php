@@ -94,7 +94,7 @@
               </a>
               <ul class="list-group collapse fade" id="ventasCollapse">
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="dashboard_tactores.php">Tractores</a>
+                  <a class="btn btn-sm btn-block text-left" href="#">Item 1</a>
                 </li>
                 <li class="list-group-item" id="nivel2">
                   <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>
@@ -226,6 +226,14 @@
   $clasePrioridad = asignarClasePrioridad($prioridad);
 
   ?>
+
+  <?php
+  $id_rol = $_SESSION['id_rol'];
+  $usuario = $_SESSION['usuario'];
+  include("notificaciones.php");
+  include("verComentarios.php");
+  //  include("modificaComentarios.php");
+  ?>
   <div class="container">
     <div class="informacion-solicitud">
       <div class="solicitud-card">
@@ -234,10 +242,12 @@
             <div>
               <?php echo mb_strtoupper($nombreSolicitud, 'UTF-8'); ?>
             </div>
-            <div class="<?php echo $claseEstado; ?>">
+            <div id="statusSolicitud" class="<?php echo $claseEstado; ?>" data-toggle="modal" 
+              data-target="<?php if ($_SESSION["id_rol"] != 3) echo "#cambioEstado" ?>" style="<?php if ($_SESSION["id_rol"] != 3) echo "cursor: pointer" ?>;">
               <?php echo $estado; ?>
             </div>
-            <div class="<?php echo $clasePrioridad; ?>"> Prioridad
+            <div id="prioridadSolicitud" class="<?php echo $clasePrioridad; ?>" data-toggle="modal"
+              data-target="<?php if ($_SESSION["id_rol"] != 3) echo "#cambioPrioridad" ?>" style="<?php if ($_SESSION["id_rol"] != 3) echo "cursor: pointer" ?>;"> Prioridad
               <?php echo $prioridad; ?>
             </div>
           </div>
@@ -265,17 +275,26 @@
         <div class="solicitud-details">
           <div class="solicitud-title">
             <div>
-              Comentarios de Solicitud
+              OBSERVACIONES
             </div>
             <div></div>
-            <div id="btnComentario" class="clickeable">
-              Agregar comentario
-            </div>
+            <?php
+            if ($_SESSION["id_rol"] != 3) {
+              $msg = ($c != null) ? "Modificar observación" : "Agregar observación";
+              echo '
+              <div id="btnComentario"  data-toggle="modal" data-target="#comentarios" style="cursor: pointer;">'
+                . $msg .
+                '</div>';
+            }
+            ?>
           </div>
           <div class="solicitud-info">
             <?php
-            //Muestra comentarios
-            include 'verComentarios.php';
+            //Muestra comentarios            
+            if ($c == null)
+              echo "No se encontraron observaciones para la solicitud seleccionada";
+            else
+              echo $c;
             ?>
           </div>
         </div>
@@ -293,13 +312,106 @@
     </div>
   </div>
   <!-----------------------------Contenido principal------------------------------->
-  <!-----------------------------Ventana de Notificaciones------------------------------->
-  <?php
-  $id_rol = $_SESSION['id_rol'];
-  $usuario = $_SESSION['usuario'];
-  include("notificaciones.php");
-  ?>
-  <!-----------------------------Ventana de Notificaciones------------------------------->
+  <!-----------------------------Ventana de Comentarios------------------------------->
+  <div class="modal fade" data-toggle="modal" id="comentarios" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">
+            <?php if ($c != null)
+              echo "Modificar observación";
+            else
+              echo 'Agregar observación'; ?>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="modificaComentarios.php" method="post">
+        <input type="hidden" name="accion" value="modificaComentario">
+          <div class="modal-body">
+            <div class="input-group">
+              <textarea name="nombreSolicitud" style="display: none;"><?php echo $nombreSolicitud; ?></textarea>
+              <textarea name="observacion" class="form-control" aria-label="comentario" rows="3"
+                placeholder="Ingresa observación"><?php if ($c != null)
+                  echo $c; ?></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Guardar observación</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-----------------------------Ventana de Comentarios------------------------------->
+  <!-----------------------------Ventana de cambio de estado------------------------------->      
+  <div class="modal fade" data-toggle="modal" id="cambioEstado" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">
+          Modificar estado                        
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="modificaComentarios.php" method="post">
+        <input type="hidden" name="accion" value="modificaEstado"> 
+          <div class="modal-body">
+          <textarea name="nombreSolicitud" style="display: none;"><?php echo $nombreSolicitud; ?></textarea>
+          <select class="form-control" id="estadoNuevo" name="estadoNuevo">
+              <option selected>Selecciona un nuevo estado</option>
+              <option value="Listo">Listo</option>
+              <option value="En curso">En curso</option>
+              <option value="Detenido">Detenido</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Guardar estado</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-----------------------------Ventana de cambio de estado------------------------------->
+  <!-----------------------------Ventana de cambio de prioridad---------------------------->      
+  <div class="modal fade" data-toggle="modal" id="cambioPrioridad" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="">
+          Modificar prioridad                        
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="modificaComentarios.php" method="post">
+        <input type="hidden" name="accion" value="modificaPrioridad"> 
+          <div class="modal-body">
+          <textarea name="nombreSolicitud" style="display: none;"><?php echo $nombreSolicitud; ?></textarea>
+          <select class="form-control" id="prioridadNueva" name="prioridadNueva">
+              <option selected>Selecciona una nueva prioridad</option>
+              <option value="Alta">Alta</option>
+              <option value="Media">Media</option>
+              <option value="Baja">Baja</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Guardar prioridad</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-----------------------------Ventana de cambio de prioridad------------------------------->
 </body>
-
 </html>

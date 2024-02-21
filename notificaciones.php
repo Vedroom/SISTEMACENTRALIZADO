@@ -98,13 +98,7 @@
                   $usuarioLog = $row["usuario"];
                   $accionLog = $row["accion"];
                   $solicitudLog = $row["solicitud"];
-                  ?>
                   
-                  <script>
-                    console.log("<?php echo $fechaLog . " " . $usuarioLog . " " . $accionLog . " " . $solicitudLog; ?>")
-                  </script>
-                  <?php
-
                   // Aplica la lógica de filtrado según el rol del usuario
                   if (($rol == 1) || ($rol == 2 && $usuario == $usuarioLog) || ($rol == 3 && $usuario == $usuarioLog)) {
 
@@ -118,12 +112,12 @@
                         <?php echo $fechaLog; ?>
                       </td>
                       <td>
-                        <?php echo $mensajeNotificacion; ?>
+                        <?php echo $mensajeNotificacion; ?> 12
                       </td>
                       <td>
                         <?php
                         //Muestra el mensaje dependiendo al rol                        
-                        if ($rol == 1 || $rol == 2) {
+                        if ($rol == 1 || $rol == 2 || $rol ==3) {
                           echo "El usuario " . '<strong>' . $usuarioLog . '</strong>' . " " . $contenido . "<strong> '" . $solicitudLog . "' </strong> exitosamente";
                         } elseif ($rol == 3) {
                           echo $contenido . " <strong>'" . $solicitudLog . "'</strong> exitosamente";
