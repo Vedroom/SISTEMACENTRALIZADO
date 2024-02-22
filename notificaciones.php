@@ -50,7 +50,7 @@
                     case 'creacion':
                       return 'Ha creado la Solicitud ';
                     case 'modificacion':
-                      return 'Ha modificado la Solicitud ';
+                      return 'Ha modificado ';
                     case 'eliminacion':
                       return 'Ha eliminado la Solicitud ';
                     default:
@@ -98,6 +98,7 @@
                   $usuarioLog = $row["usuario"];
                   $accionLog = $row["accion"];
                   $solicitudLog = $row["solicitud"];
+                  $modifica = $row["tipo"];
                   
                   // Aplica la lógica de filtrado según el rol del usuario
                   if (($rol == 1) || ($rol == 2 && $usuario == $usuarioLog) || ($rol == 3 && $usuario == $usuarioLog)) {
@@ -112,15 +113,22 @@
                         <?php echo $fechaLog; ?>
                       </td>
                       <td>
-                        <?php echo $mensajeNotificacion; ?> 12
+                        <?php echo $mensajeNotificacion; ?>
                       </td>
                       <td>
                         <?php
                         //Muestra el mensaje dependiendo al rol                        
-                        if ($rol == 1 || $rol == 2 || $rol ==3) {
-                          echo "El usuario " . '<strong>' . $usuarioLog . '</strong>' . " " . $contenido . "<strong> '" . $solicitudLog . "' </strong> exitosamente";
+                        if ($rol == 1 || $rol == 2) {
+                          if($accionLog == "modificacion"){
+                            echo "El usuario " . '<strong>' . $usuarioLog . '</strong>' . " " . $contenido . " <strong>". $modifica . "</strong> de la solicitud" . "<strong> '" . $solicitudLog . "' </strong>";
+                          }else{
+                            echo "El usuario " . '<strong>' . $usuarioLog . '</strong>' . " " . $contenido . "<strong> '" . $solicitudLog . "' </strong> exitosamente";
+                        }
                         } elseif ($rol == 3) {
-                          echo $contenido . " <strong>'" . $solicitudLog . "'</strong> exitosamente";
+                          if($accionLog == "modificacion"){
+                            echo "El usuario " . '<strong>' . $usuarioLog . '</strong>' . " " . $contenido . " <strong>". $modifica . "</strong> de la solicitud" . "<strong> '" . $solicitudLog . "' </strong>";
+                          }else{                          
+                            echo $contenido . " <strong>'" . $solicitudLog . "'</strong> exitosamente";}
                         }
                         ?>
                       </td>
@@ -156,3 +164,5 @@
   </div>
 </div>
 <!-----------------------------Panel de notificaciones-------------------------->
+
+

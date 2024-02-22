@@ -63,7 +63,7 @@ try {
      */
 
     // Query de inserción en la primera tabla (solicitudes)
-    $sql1 = "INSERT INTO solicitudes (id, nombreSolicitud, descripcion, responsable, fechaaaa, estado, presupuesto, prioridad) 
+    $sql1 = "INSERT INTO solicitudes (id, nombreSolicitud, descripcion, responsable, fecha, estado, presupuesto, prioridad) 
              VALUES ('$siguienteId', '$nombreSolicitud', '$descripcion', '$responsable', '$fechaHoy', '$estadoInicial', '$presupuesto', '$prioridad')";
     $con->query($sql1);
 
@@ -87,6 +87,6 @@ try {
 } catch (Exception $e) {
     // Manejo de excepciones: revertir la transacción en caso de error    
     echo "Error: " . $e->getMessage();
-    echo "<script>alert('Error: " . addslashes($e->getMessage()) . "');</script>";    
+    echo "<script>alert('Error: " . addslashes($e->getMessage()) . "');</script>";
 }
 ?>

@@ -332,7 +332,8 @@
         <input type="hidden" name="accion" value="modificaComentario">
           <div class="modal-body">
             <div class="input-group">
-              <textarea name="nombreSolicitud" style="display: none;"><?php echo $nombreSolicitud; ?></textarea>
+              <textarea name="usuario" style="display: none;"><?php echo $usuario; ?></textarea>
+              <textarea name="nombreSolicitud"style="display: none;"><?php echo $nombreSolicitud; ?></textarea>
               <textarea name="observacion" class="form-control" aria-label="comentario" rows="3"
                 placeholder="Ingresa observación"><?php if ($c != null)
                   echo $c; ?></textarea>
@@ -363,6 +364,7 @@
         <form action="modificaComentarios.php" method="post">
         <input type="hidden" name="accion" value="modificaEstado"> 
           <div class="modal-body">
+          <textarea name="usuario" style="display: none;"><?php echo $usuario; ?></textarea>
           <textarea name="nombreSolicitud" style="display: none;"><?php echo $nombreSolicitud; ?></textarea>
           <select class="form-control" id="estadoNuevo" name="estadoNuevo">
               <option selected>Selecciona un nuevo estado</option>
@@ -396,6 +398,7 @@
         <form action="modificaComentarios.php" method="post">
         <input type="hidden" name="accion" value="modificaPrioridad"> 
           <div class="modal-body">
+          <textarea name="usuario" style="display: none;"><?php echo $usuario; ?></textarea> 
           <textarea name="nombreSolicitud" style="display: none;"><?php echo $nombreSolicitud; ?></textarea>
           <select class="form-control" id="prioridadNueva" name="prioridadNueva">
               <option selected>Selecciona una nueva prioridad</option>
