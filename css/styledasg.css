@@ -159,6 +159,14 @@
   margin-bottom: 0.5rem;
 }
 
+.solicitud-title-text {
+  display: grid;
+  grid-template-rows: repeat(auto-fit, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 0.5rem;
+}
+
 .solicitud-info {
   margin-bottom: 0.5rem;
 }
@@ -259,3 +267,8 @@
   .alert.error {
     background-color: #FF5733;
   }
+
+
+  /**/
+  
+  

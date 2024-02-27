@@ -188,6 +188,9 @@
   $estado = $row['estado'];
   $presupuesto = $row['presupuesto'];
   $prioridad = $row['prioridad'];
+  $agencia = $row['agencia'];
+  $depto = $row['depto'];
+  $gerente = $row['gerente'];
 
   //Define la clase dependiendo del estado asignado
   function asignarClaseEstado($estado)
@@ -242,12 +245,14 @@
             <div>
               <?php echo mb_strtoupper($nombreSolicitud, 'UTF-8'); ?>
             </div>
-            <div id="statusSolicitud" class="<?php echo $claseEstado; ?>" data-toggle="modal" 
-              data-target="<?php if ($_SESSION["id_rol"] != 3) echo "#cambioEstado" ?>" style="<?php if ($_SESSION["id_rol"] != 3) echo "cursor: pointer" ?>;">
+            <div id="statusSolicitud" class="<?php echo $claseEstado; ?>" data-toggle="modal" data-target="<?php if ($_SESSION["id_rol"] != 3)
+                 echo "#cambioEstado" ?>" style="<?php if ($_SESSION["id_rol"] != 3)
+                 echo "cursor: pointer" ?>;">
               <?php echo $estado; ?>
             </div>
-            <div id="prioridadSolicitud" class="<?php echo $clasePrioridad; ?>" data-toggle="modal"
-              data-target="<?php if ($_SESSION["id_rol"] != 3) echo "#cambioPrioridad" ?>" style="<?php if ($_SESSION["id_rol"] != 3) echo "cursor: pointer" ?>;"> Prioridad
+            <div id="prioridadSolicitud" class="<?php echo $clasePrioridad; ?>" data-toggle="modal" data-target="<?php if ($_SESSION["id_rol"] != 3)
+                 echo "#cambioPrioridad" ?>" style="<?php if ($_SESSION["id_rol"] != 3)
+                 echo "cursor: pointer" ?>;"> Prioridad
               <?php echo $prioridad; ?>
             </div>
           </div>
@@ -266,8 +271,34 @@
               <?php echo $presupuesto; ?>
             </span>
           </div>
-          <div class="solicitud-info">
+          <div class="solicitud-info" style="text-align: justify;">
             <?php echo $descripcion; ?>
+          </div>
+        </div>
+      </div>
+      <div class="solicitud-card">
+        <div class="solicitud-details">
+          <div class="solicitud-title">
+            <div>
+              GERENTE
+            </div>
+            <div>
+              DEPARTAMENTO
+            </div>
+            <div>
+              SUCURSAL
+            </div>
+          </div>
+          <div class="solicitud-title-text">
+            <div>
+              <?php echo ($gerente == null) ? "No hay gerente capturado" : $gerente; ?>
+            </div>
+            <div>
+              <?php echo ($depto == null) ? "No hay departamento capturado" : $depto; ?>
+            </div>
+            <div>
+              <?php echo ($agencia == null) ? "No hay agencia capturada" : $agencia; ?>
+            </div>
           </div>
         </div>
       </div>
@@ -288,7 +319,7 @@
             }
             ?>
           </div>
-          <div class="solicitud-info">
+          <div class="solicitud-info" style="text-align: justify;">
             <?php
             //Muestra comentarios            
             if ($c == null)
@@ -302,6 +333,20 @@
       <div id="archivo" class="solicitud-card">
         <div class="solicitud-details">
           <div class="solicitud-info">
+            <div class="solicitud-title">
+              <div>
+                ARCHIVO DE COTIZACIÓN
+              </div>
+              <div></div>
+              <?php
+              if ($_SESSION["id_rol"] != 3) {                
+                echo '
+              <div id="btnComentario"  data-toggle="modal" data-target="#comentarios" style="cursor: pointer;">'
+                  . "Cambiar archivo" .
+                  '</div>';
+              }
+              ?>
+            </div>
             <?php
             // Muestra el archivo de cotización
             include 'verArchivos.php';
@@ -329,11 +374,11 @@
           </button>
         </div>
         <form action="modificaComentarios.php" method="post">
-        <input type="hidden" name="accion" value="modificaComentario">
+          <input type="hidden" name="accion" value="modificaComentario">
           <div class="modal-body">
             <div class="input-group">
               <textarea name="usuario" style="display: none;"><?php echo $usuario; ?></textarea>
-              <textarea name="nombreSolicitud"style="display: none;"><?php echo $nombreSolicitud; ?></textarea>
+              <textarea name="nombreSolicitud" style="display: none;"><?php echo $nombreSolicitud; ?></textarea>
               <textarea name="observacion" class="form-control" aria-label="comentario" rows="3"
                 placeholder="Ingresa observación"><?php if ($c != null)
                   echo $c; ?></textarea>
@@ -348,25 +393,25 @@
     </div>
   </div>
   <!-----------------------------Ventana de Comentarios------------------------------->
-  <!-----------------------------Ventana de cambio de estado------------------------------->      
+  <!-----------------------------Ventana de cambio de estado------------------------------->
   <div class="modal fade" data-toggle="modal" id="cambioEstado" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">
-          Modificar estado                        
+            Modificar estado
           </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <form action="modificaComentarios.php" method="post">
-        <input type="hidden" name="accion" value="modificaEstado"> 
+          <input type="hidden" name="accion" value="modificaEstado">
           <div class="modal-body">
-          <textarea name="usuario" style="display: none;"><?php echo $usuario; ?></textarea>
-          <textarea name="nombreSolicitud" style="display: none;"><?php echo $nombreSolicitud; ?></textarea>
-          <select class="form-control" id="estadoNuevo" name="estadoNuevo">
+            <textarea name="usuario" style="display: none;"><?php echo $usuario; ?></textarea>
+            <textarea name="nombreSolicitud" style="display: none;"><?php echo $nombreSolicitud; ?></textarea>
+            <select class="form-control" id="estadoNuevo" name="estadoNuevo">
               <option selected>Selecciona un nuevo estado</option>
               <option value="Listo">Listo</option>
               <option value="En curso">En curso</option>
@@ -382,25 +427,25 @@
     </div>
   </div>
   <!-----------------------------Ventana de cambio de estado------------------------------->
-  <!-----------------------------Ventana de cambio de prioridad---------------------------->      
+  <!-----------------------------Ventana de cambio de prioridad---------------------------->
   <div class="modal fade" data-toggle="modal" id="cambioPrioridad" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="">
-          Modificar prioridad                        
+            Modificar prioridad
           </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <form action="modificaComentarios.php" method="post">
-        <input type="hidden" name="accion" value="modificaPrioridad"> 
+          <input type="hidden" name="accion" value="modificaPrioridad">
           <div class="modal-body">
-          <textarea name="usuario" style="display: none;"><?php echo $usuario; ?></textarea> 
-          <textarea name="nombreSolicitud" style="display: none;"><?php echo $nombreSolicitud; ?></textarea>
-          <select class="form-control" id="prioridadNueva" name="prioridadNueva">
+            <textarea name="usuario" style="display: none;"><?php echo $usuario; ?></textarea>
+            <textarea name="nombreSolicitud" style="display: none;"><?php echo $nombreSolicitud; ?></textarea>
+            <select class="form-control" id="prioridadNueva" name="prioridadNueva">
               <option selected>Selecciona una nueva prioridad</option>
               <option value="Alta">Alta</option>
               <option value="Media">Media</option>
@@ -416,5 +461,41 @@
     </div>
   </div>
   <!-----------------------------Ventana de cambio de prioridad------------------------------->
+  <!-----------------------------Ventana de cambio de archivo---------------------------->
+  <div class="modal fade" data-toggle="modal" id="cambioArchivo" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="">
+            Cambiar archivo
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="modificaComentarios.php" method="post">
+          <input type="hidden" name="accion" value="modificaArchivo">
+          <div class="modal-body">
+            <textarea name="usuario" style="display: none;"><?php echo $usuario; ?></textarea>
+            <textarea name="nombreSolicitud" style="display: none;"><?php echo $nombreSolicitud; ?></textarea>
+            <div class="file-input-container">
+              <label for="Prioridad">Archivo de cotización <span class="upload-icon">📂</span> : </label><br>
+              <div class="mb-3">
+                <input class="form-control" type="file" name="archivo" id="archivo" class="inputfile" acept=".pdf"
+                  required>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Guardar prioridad</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-----------------------------Ventana de cambio de archivo------------------------------->
 </body>
+
 </html>

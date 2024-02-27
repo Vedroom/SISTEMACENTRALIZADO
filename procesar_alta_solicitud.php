@@ -42,6 +42,9 @@ $nombreSolicitud = $_POST["nombreSolicitud"];
 $descripcion = $_POST["desc"];
 $presupuesto = $_POST['presupuesto'];
 $prioridad = $_POST['prioridad'];
+$agencia = $_POST['agencia'];
+$depto = $_POST['depto'];
+$gerente = $_POST['gerente'];
 date_default_timezone_set('America/Mexico_City');
 $fechaHoy = date("d/m/Y"); // Formato: Año-Mes-Día
 $fechaHoraActual = date('d/m/Y H:i');
@@ -63,8 +66,8 @@ try {
      */
 
     // Query de inserción en la primera tabla (solicitudes)
-    $sql1 = "INSERT INTO solicitudes (id, nombreSolicitud, descripcion, responsable, fecha, estado, presupuesto, prioridad) 
-             VALUES ('$siguienteId', '$nombreSolicitud', '$descripcion', '$responsable', '$fechaHoy', '$estadoInicial', '$presupuesto', '$prioridad')";
+    $sql1 = "INSERT INTO solicitudes (id, nombreSolicitud, descripcion, responsable, fecha, estado, presupuesto, prioridad, agencia, depto, gerente) 
+             VALUES ('$siguienteId', '$nombreSolicitud', '$descripcion', '$responsable', '$fechaHoy', '$estadoInicial', '$presupuesto', '$prioridad', '$agencia', '$depto', '$gerente')";
     $con->query($sql1);
 
     // Query de inserción en la segunda tabla (logsolicitudes)

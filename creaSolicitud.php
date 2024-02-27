@@ -28,6 +28,14 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
     integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
     crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
   <!----------------------Bootstrap--------------------------------------->
   <link rel="stylesheet" href="css/styledasg.css">
   <style>
@@ -189,7 +197,8 @@
   <!-----------------------------Alta de usuarios------------------------------------------>
   <div class="container mt-5 formularios">
     <h2 class="mb-4">Crear solicitud</h2>
-    <form id="datosSolicitud" action="procesar_alta_solicitud.php" onsubmit="return validarFormulario();" method="post" enctype="multipart/form-data">
+    <form id="datosSolicitud" action="procesar_alta_solicitud.php" onsubmit="return validarFormulario();" method="post"
+      enctype="multipart/form-data">
       <!--------------------------Usuario---------------------------->
       <div class="form-group">
         <label for="nombreSolicitud">Nombre de Solicitud:</label>
@@ -201,43 +210,93 @@
         <input type="text" class="form-control" name="desc" required>
       </div>
       <!----------------------------Presupuesto estimado---------------------------------->
-      <div class="form-group">
-        <label for="nombre">Presupuesto:</label>
-        <input type="number" class="form-control" name="presupuesto" required>
+      <script>
+        $(document).ready(function () {
+          $('.mask-money').mask('000,000,000,000,000.00', {
+            reverse: true
+          });
+        });
+      </script> 
+      <label for="nombre">Presupuesto:</label><br>
+      <div class="form-group input-group mb-3">
+        <span class="input-group-text">$</span>
+        <input type="text" class="form-control mask-money" name="presupuesto"  placeholder="0.00" maxlength="15" required>
       </div>
       <!----------------------------Prioridad------------------------------------------->
       <div class="form-group">
-        <label for="Prioridad">Prioridad:</label>
-        <select name="prioridad" id="prioridad">
+        <label for="prioridad">Prioridad:</label>
+        <select class="form-control" id="prioridad" name="prioridad">
           <option value="" selected disabled>Selecciona la prioridad</option>
           <option value="Alta">Alta</option>
           <option value="Media">Media</option>
           <option value="Baja">Baja</option>
-        </select><br>
+        </select>
+      </div>           
+      <!----------------------------Agencia--------------------------------------------->
+      <div class="form-group">
+        <label for="prioridad">Agencia:</label>
+        <select class="form-control" id="agencia" name="agencia">
+          <option value="" selected disabled>Selecciona la agencia</option>
+          <option value="Autlan">Autlán</option>
+          <option value="Bajaj CD Valles">Bajaj CD. Valles</option>
+          <option value="Bajaj Vias">Bajaj Vías</option>
+          <option value="Bajaj Zacatecas">Bajaj Zacatecas</option>
+          <option value="CD Guzman">CD. Guzmán</option>
+          <option value="CD Valles">CD. Valles</option>
+          <option value="Colima">Colima</option>
+          <option value="Ebano">Ébano</option>
+          <option value="Fresnillo">Fresnillo</option>
+          <option value="Guadalupe">Guadalupe</option>
+          <option value="Kawasaki">Kawasaki</option>
+          <option value="Loreto">Loreto</option>
+          <option value="Rioverde">Rioverde</option>
+          <option value="Salinas">Salinas</option>
+          <option value="San Luis de la Paz">San Luis de la Paz</option>
+          <option value="San Luis MAVEPO">San Luis MAVEPO</option>
+          <option value="Super Soco">Súper Soco</option>
+        </select>
+      </div>
+      <!----------------------------Departamento--------------------------------------------->
+      <div class="form-group">
+        <label for="prioridad">Departamento:</label>
+        <select class="form-control" id="depto" name="depto">
+          <option value="" selected disabled>Selecciona el departamento</option>
+          <option value="Departamento en General">Departamento en General</option>
+          <option value="Administracion">Administración</option>
+          <option value="Contabilidad">Contabilidad</option>
+          <option value="Logistica">Logística</option>
+          <option value="Marketing">Marketing</option>
+          <option value="Refacciones">Refacciones</option>
+          <option value="Servicios">Servicios</option>
+          <option value="Sistemas">Sistemas</option>
+          <option value="Ventas">Ventas</option>
+        </select>
+      </div>
+      <!----------------------------Gerente--------------------------------------------->
+      <div class="form-group">
+        <label for="prioridad">Gerente:</label>
+        <select class="form-control" id="gerente" name="gerente">
+          <option value="" selected disabled>Selecciona el gerente</option>
+          <option value="Alberto">Alberto</option>
+          <option value="Alfredo">Alfredo</option>
+          <option value="Angel">Angel</option>
+          <option value="CP. Hector">CP. Hector</option>
+          <option value="Delia">Delia</option>
+          <option value="Gloria">Gloria</option>
+          <option value="Idalia">Idalia</option>
+          <option value="Jorge">Jorge</option>
+          <option value="Sandra">Sandra</option>
+          <option value="Vicente">Vicente</option>
+          <option value="Victoria">Victoria</option>
+        </select>
       </div>
       <!----------------------------Archivo de cotización------------------------------->
       <div class="file-input-container">
-        <label for="Prioridad">Archivo de cotización:</label><br>
-        <label for="archivo" class="upload-btn">
-          <span class="upload-icon">📂</span>
-          <span class="upload-text" id="nameDoc">Seleccionar Archivo</span>
-        </label>
-        <input type="file" name="archivo" id="archivo" class="inputfile" acept=".pdf" required>
+        <label for="Prioridad">Archivo de cotización <span class="upload-icon">📂</span> : </label><br>
+        <div class="mb-3">
+          <input class="form-control" type="file" name="archivo" id="archivo" class="inputfile" acept=".pdf" required>
+        </div>
       </div>
-
-      <script>
-        document.addEventListener('DOMContentLoaded', function () {
-          // Obtener el input de tipo archivo y el elemento de nombre del archivo
-          const fileInput = document.getElementById('archivo');
-          const contenedor = document.getElementById("nameDoc");
-
-          // Agregar un escucha de eventos para el cambio en el input de archivo
-          fileInput.addEventListener('change', function () {
-            // Actualizar el nombre del archivo en el elemento de visualización            
-            contenedor.textContent =fileInput.files[0].name;
-          });
-        });
-      </script>
       <!-------------------- Botones del formulario ------------------------------------->
       <div class="form-group">
         <button type="submit" class="btn btn-primary">Registrar</button>
@@ -245,8 +304,6 @@
       </div>
     </form>
   </div><!-----------------------------Alta de usuarios------------------------------------------>
-
   <!---------------------------Contenido principal-------------------------------------------->
 </body>
-
 </html>
