@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -210,7 +209,7 @@
         <input type="text" class="form-control" name="desc" required>
       </div>
       <!----------------------------Presupuesto estimado---------------------------------->
-      <script>
+      <script> //1,500.00
         $(document).ready(function () {
           $('.mask-money').mask('000,000,000,000,000.00', {
             reverse: true

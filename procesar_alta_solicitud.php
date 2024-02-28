@@ -1,5 +1,4 @@
 <?php
-
 include("db.php");
 
 // Verificar la conexión
@@ -64,28 +63,34 @@ try {
      * -- Reinicia el servidor MySQL
      * FLUSH PRIVILEGES;
      */
+    // 1,500.00
 
-    // Query de inserción en la primera tabla (solicitudes)
     $sql1 = "INSERT INTO solicitudes (id, nombreSolicitud, descripcion, responsable, fecha, estado, presupuesto, prioridad, agencia, depto, gerente) 
-             VALUES ('$siguienteId', '$nombreSolicitud', '$descripcion', '$responsable', '$fechaHoy', '$estadoInicial', '$presupuesto', '$prioridad', '$agencia', '$depto', '$gerente')";
-    $con->query($sql1);
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt1 = $con->prepare($sql1);
+    $stmt1->bind_param("sssssssssss", $siguienteId, $nombreSolicitud, $descripcion, $responsable, $fechaHoy, $estadoInicial, $presupuesto, $prioridad, $agencia, $depto, $gerente);
+    $stmt1->execute();
+    $stmt1->close();
 
     // Query de inserción en la segunda tabla (logsolicitudes)
     $sql2 = "INSERT INTO logsolicitudes (id, fecha, usuario, accion, solicitud) 
-             VALUES ('$siguienteIdLog' ,'$fechaHoraActual', '$responsable', 'creacion', '$nombreSolicitud')";
-    $con->query($sql2);
+     VALUES (?, ?, ?, 'creacion', ?)";
+    $stmt2 = $con->prepare($sql2);
+    $stmt2->bind_param("ssss", $siguienteIdLog, $fechaHoraActual, $responsable, $nombreSolicitud);
+    $stmt2->execute();
+    $stmt2->close();
 
     // Query de inserción en la tercera tabla (archivossolicitudes)
     $sql3 = "INSERT INTO archivossolicitudes (nombreArchivo, solicitud, datosArchivo) 
-             VALUES ('$nombre_archivo', '$nombreSolicitud','$archivo_contenido')";
-    $con->query($sql3);
+     VALUES (?, ?, ?)";
+    $stmt3 = $con->prepare($sql3);
+    $stmt3->bind_param("sss", $nombre_archivo, $nombreSolicitud, $archivo_contenido);
+    $stmt3->execute();
+    $stmt3->close();
 
     // Confirmar la transacción
     $con->commit();
-
-    // Redirigir al usuario a una página de confirmación
-    echo "<script>alert('Solicitud creada correctamente');</script>";
-    header("Location: solicitudes.php?mensaje=Solicitud creada correctamente");
+    header("Location: solicitudes.php?mensaje=creacionsolicitud");
     exit();
 } catch (Exception $e) {
     // Manejo de excepciones: revertir la transacción en caso de error    

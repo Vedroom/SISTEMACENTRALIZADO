@@ -31,6 +31,7 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <!----------------------Bootstrap--------------------------------------->
   <link rel="stylesheet" type="text/css" href="css/styledasg.css">
   <style>
@@ -43,21 +44,26 @@
       text-decoration: none;
     }
   </style>
-  <?php
-// Recuperar el mensaje de la URL
-$mensaje = isset($_GET['mensaje']) ? $_GET['mensaje'] : '';
-
-// Mostrar la alerta en JavaScript
-if ($mensaje) {
-    echo "<script>alert('$mensaje');</script>";
-}
-?>
 </head>
 
 <body>
+  
+<?php
+  // Recuperar el mensaje de la URL
+  $mensaje = isset($_GET['mensaje']) ? $_GET['mensaje'] : '';
+
+  // Mostrar la alerta en JavaScript
+  if ($mensaje) {
+    echo "
+    <script>
+    // Ejemplo de alerta básica
+    Swal.fire('Solicitud creada correctamente', '', 'success');
+    </script>";
+  }
+  ?>
   <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow navegador">
-    <a href="menu.php" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png" alt=""
-        class="imglogo"></a>
+    <a href="menu.php" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png"
+        alt="" class="imglogo"></a>
     <ul class="navbar-nav px-3 ml-auto"> <!-- Utiliza 'ml-auto' para alinear a la derecha -->
       <li class="nav-item text-nowrap">
         <?php
@@ -78,7 +84,6 @@ if ($mensaje) {
       </li>
     </ul>
   </nav>
-
   <!---------------------------Navegador vertical-------------------------------------------->
   <div class="container-fluid">
     <div class="row">
@@ -300,7 +305,7 @@ if ($mensaje) {
             <?php echo $estado; ?>
           </td>
           <td>
-            <?php echo $presupuesto; ?>
+            <?php echo "$".$presupuesto; ?>
           </td>
           <td class="<?php echo $clasePrioridad; ?>">
             <?php echo $prioridad; ?>
@@ -337,4 +342,5 @@ if ($mensaje) {
   ?>
   <!-----------------------------Ventana de Notificaciones------------------------------->
 </body>
+
 </html>

@@ -35,6 +35,7 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <!----------------------Bootstrap--------------------------------------->
   <link rel="stylesheet" type="text/css" href="css/styledasg.css">
   <style>
@@ -53,6 +54,42 @@
 </head>
 
 <body>
+  <?php
+  // Recuperar el mensaje de la URL
+  $mensaje = isset($_GET['mensaje']) ? $_GET['mensaje'] : '';
+  $solicitud = isset($_GET['solicitud']) ? $_GET['solicitud'] : '';
+
+  // Mostrar la alerta en JavaScript
+  switch ($mensaje) {
+    case "observacion": echo "
+    <script>
+    // Ejemplo de alerta básica   
+    Swal.fire('Observación modificada correctamente', '', 'success');
+    </script>";
+    break;
+
+    case "estado": echo "
+    <script>
+    // Ejemplo de alerta básica   
+    Swal.fire('Estado modificado correctamente', '', 'success');
+    </script>";
+    break;
+
+    case "prioridad": echo "
+    <script>
+    // Ejemplo de alerta básica   
+    Swal.fire('Prioridad modificada correctamente', '', 'success');
+    </script>";
+    break;
+
+    case "archivo": echo "
+    <script>
+    // Ejemplo de alerta básica   
+    Swal.fire('Archivo cambiado correctamente', '', 'success');
+    </script>";
+    break;
+  }
+  ?>
   <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow navegador">
     <a href="menu.php" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png"
         alt="" class="imglogo"></a>
@@ -175,7 +212,8 @@
 
   //Obtén el nombre del registro desde la URL
   $nombreSolicitud = $_GET['nombre'];
-
+  
+  
   //Realiza una consulta para obtener los detalles del registro con el nombre
   $busca_solicitud = "SELECT * FROM `solicitudes` WHERE nombreSolicitud='$nombreSolicitud'";
   $result = mysqli_query($con, $busca_solicitud);
@@ -339,9 +377,9 @@
               </div>
               <div></div>
               <?php
-              if ($_SESSION["id_rol"] != 3) {                
+              if ($_SESSION["id_rol"] != 3) {
                 echo '
-              <div id="btnComentario"  data-toggle="modal" data-target="#comentarios" style="cursor: pointer;">'
+              <div id="btnComentario"  data-toggle="modal" data-target="#cambioArchivo" style="cursor: pointer;">'
                   . "Cambiar archivo" .
                   '</div>';
               }
@@ -474,13 +512,13 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="modificaComentarios.php" method="post">
+        <form action="modificaComentarios.php" method="post" enctype="multipart/form-data">
           <input type="hidden" name="accion" value="modificaArchivo">
           <div class="modal-body">
             <textarea name="usuario" style="display: none;"><?php echo $usuario; ?></textarea>
             <textarea name="nombreSolicitud" style="display: none;"><?php echo $nombreSolicitud; ?></textarea>
             <div class="file-input-container">
-              <label for="Prioridad">Archivo de cotización <span class="upload-icon">📂</span> : </label><br>
+              <label for="Prioridad">Archivo de cotización nuevo<span class="upload-icon">📂</span> </label><br>
               <div class="mb-3">
                 <input class="form-control" type="file" name="archivo" id="archivo" class="inputfile" acept=".pdf"
                   required>
