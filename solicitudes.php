@@ -6,14 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solicitudes</title>
   <link rel="shortcut icon" href="img/3 PRUEBA-12.png" type="image/x-icon">
+
   <!-- Favicons -->
   <link rel="apple-touch-icon" href="/docs/4.6/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-  <link rel="icon" href="/docs/4.6/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-  <link rel="icon" href="/docs/4.6/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-  <link rel="manifest" href="/docs/4.6/assets/img/favicons/manifest.json">
   <link rel="mask-icon" href="/docs/4.6/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
   <link rel="icon" href="/docs/4.6/assets/img/favicons/favicon.ico">
   <!----------------------Bootstrap---------------------------------------->
+  <!-- Incluye jQuery primero -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+
+  <!-- Luego incluye Popper.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+
+  <!-- Finalmente, incluye Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+    integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+    crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
     integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
@@ -47,8 +59,8 @@
 </head>
 
 <body>
-  
-<?php
+
+  <?php
   // Recuperar el mensaje de la URL
   $mensaje = isset($_GET['mensaje']) ? $_GET['mensaje'] : '';
 
@@ -64,7 +76,12 @@
   <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow navegador">
     <a href="menu.php" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png"
         alt="" class="imglogo"></a>
-    <ul class="navbar-nav px-3 ml-auto"> <!-- Utiliza 'ml-auto' para alinear a la derecha -->
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+      data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <ul class="navbar-nav px-3">
       <li class="nav-item text-nowrap">
         <?php
         session_start();
@@ -78,13 +95,10 @@
         <!------------------------Identificacion del usuario de la sesion------------->
         <p style="color: aliceblue;">
           <?php echo $_SESSION["nombre"]; ?>
-          <img id="imgNotificaciones" src="img/notification_false.png" alt="Icono de Notificaciones" data-toggle="modal"
-            data-target="#notificacionesModal" style="cursor: pointer; width:5%;">
         </p>
       </li>
     </ul>
-  </nav>
-  <!---------------------------Navegador vertical-------------------------------------------->
+  </nav><!---------------------------Navegador vertical-------------------------------------------->
   <div class="container-fluid">
     <div class="row">
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
@@ -169,7 +183,7 @@
       });
     });
   </script>
-  <!---------------------------Navegador vertical-------------------------------------------->
+  <!--------------------------Navegador vertical-------------------------------------------->
   <!-----------------------------Contenido principal------------------------------->
 
 
@@ -207,132 +221,132 @@
   $id_ultimo_log = $id_primer_log + ($numero_logs - 1);
   $topeLog = $id_ultimo_log - 4;
 
-
-
   ?>
   <div class="container">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Solicitud</th>
-          <th scope="col">Responsable</th>
-          <th scope="col">Fecha</th>
-          <th scope="col">Estado</th>
-          <th scope="col">Presupuesto</th>
-          <th scope="col">Prioridad</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Solicitud</th>
+            <th scope="col" style="text-align: center;">Responsable</th>
+            <th scope="col" style="text-align: center;">Fecha</th>
+            <th scope="col" style="text-align: center;">Estado</th>
+            <th scope="col" style="text-align: center;">Presupuesto</th>
+            <th scope="col" style="text-align: center;">Prioridad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
 
-        //Indice para numerar los renglones
-        $indice = 1;
+          //Indice para numerar los renglones
+          $indice = 1;
 
-        //Define la clase dependiendo del estado asignado
-        function asignarClaseEstado($estado)
-        {
-          switch ($estado) {
-            case 'Listo':
-              return 'bg-success text-white';
-            case 'Detenido':
-              return 'bg-danger text-white';
-            case 'En curso':
-              return 'bg-warning text-dark';
-            default:
-              // Si el estado no coincide con ninguno de los casos anteriores, puedes devolver una clase por defecto.
-              return 'bg-default';
+          //Define la clase dependiendo del estado asignado
+          function asignarClaseEstado($estado)
+          {
+            switch ($estado) {
+              case 'Listo':
+                return 'bg-success text-white';
+              case 'Detenido':
+                return 'bg-danger text-white';
+              case 'En curso':
+                return 'bg-warning text-dark';
+              default:
+                // Si el estado no coincide con ninguno de los casos anteriores, puedes devolver una clase por defecto.
+                return 'bg-default';
+            }
           }
-        }
 
 
 
-        //Define la clase dependiendo la prioridad asignada
-        function asignarClasePrioridad($estado)
-        {
-          switch ($estado) {
-            case 'Alta':
-              return 'bg-primary text-white';
-            case 'Media':
-              return 'bg-info text-white';
-            case 'Baja':
-              return 'bg-secondary text-white';
-            default:
-              // Si el estado no coincide con ninguno de los casos anteriores, puedes devolver una clase por defecto.
-              return 'bg-default';
+          //Define la clase dependiendo la prioridad asignada
+          function asignarClasePrioridad($estado)
+          {
+            switch ($estado) {
+              case 'Alta':
+                return 'bg-primary text-white';
+              case 'Media':
+                return 'bg-info text-white';
+              case 'Baja':
+                return 'bg-secondary text-white';
+              default:
+                // Si el estado no coincide con ninguno de los casos anteriores, puedes devolver una clase por defecto.
+                return 'bg-default';
+            }
           }
-        }
 
-        //Recorre los registros
-        for ($primer_id; $primer_id <= $ultima_id; $primer_id++) {
+          //Recorre los registros
+          for ($primer_id; $primer_id <= $ultima_id; $primer_id++) {
 
 
-          //Obtiene datos de la solicitud
-          $busca_solicitud = "SELECT * FROM `solicitudes` WHERE id='$primer_id'";
-          $result = mysqli_query($con, $busca_solicitud);
-          $rows = mysqli_num_rows($result);
-          $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            //Obtiene datos de la solicitud
+            $busca_solicitud = "SELECT * FROM `solicitudes` WHERE id='$primer_id'";
+            $result = mysqli_query($con, $busca_solicitud);
+            $rows = mysqli_num_rows($result);
+            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-          //Datos del QRY
-          $nombre = (string) $row['nombreSolicitud'];
-          $responsable = $row['responsable'];
-          $fecha = $row['fecha'];
-          $estado = $row['estado'];
-          $presupuesto = $row['presupuesto'];
-          $prioridad = $row['prioridad'];
+            //Datos del QRY
+            $nombre = (string) $row['nombreSolicitud'];
+            $responsable = $row['responsable'];
+            $fecha = $row['fecha'];
+            $estado = $row['estado'];
+            $presupuesto = $row['presupuesto'];
+            $prioridad = $row['prioridad'];
 
-          // Define la clase del registro, segun su estado/prioridad
-          $claseEstado = asignarClaseEstado($estado);
-          $clasePrioridad = asignarClasePrioridad($prioridad);
+            // Define la clase del registro, segun su estado/prioridad
+            $claseEstado = asignarClaseEstado($estado);
+            $clasePrioridad = asignarClasePrioridad($prioridad);
 
-          ?>
+            ?>
 
-        <tr class="clickeable" data-name="<?php echo $nombre; ?>">
-          <th scope="row">
-            <?php echo $indice;
-            $indice++; ?>
-          </th>
-          <td>
-            <?php echo mb_strtoupper($nombre, 'UTF-8'); ?>
-          </td>
-          <td>
-            <?php echo $responsable; ?>
-          </td>
-          <td>
-            <?php echo $fecha; ?>
-          </td>
-          <td class="<?php echo $claseEstado; ?>">
-            <?php echo $estado; ?>
-          </td>
-          <td>
-            <?php echo "$".$presupuesto; ?>
-          </td>
-          <td class="<?php echo $clasePrioridad; ?>">
-            <?php echo $prioridad; ?>
-          </td>
-        </tr>
-        <?php } ?>
+          <tr class="clickeable" data-name="<?php echo $nombre; ?>">
+            <th scope="row">
+              <?php echo $indice;
+              $indice++; ?>
+            </th>
+            <td>
+              <?php echo mb_strtoupper($nombre, 'UTF-8'); ?>
+            </td>
+            <td style="text-align: center;">
+              <?php echo $responsable; ?>
+            </td>
+            <td style="text-align: center;">
+              <?php echo $fecha; ?>
+            </td>
+            <td class="<?php echo $claseEstado; ?>" style="text-align: center;">
+              <?php echo $estado; ?>
+            </td>
+            <td style="text-align: center;">
+              <?php echo "$" . $presupuesto; ?>
+            </td>
+            <td class="<?php echo $clasePrioridad; ?>" style="text-align: center;">
+              <?php echo $prioridad; ?>
+            </td>
+          </tr>
+          <?php } ?>
 
-        <script>
-          document.addEventListener("DOMContentLoaded", function () {
-            // Obtiene todas las filas clickeables
-            var filasClickeables = document.querySelectorAll(".clickeable");
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+              // Obtiene todas las filas clickeables
+              var filasClickeables = document.querySelectorAll(".clickeable");
 
-            // Agrega un evento de clic a cada fila
-            filasClickeables.forEach(function (fila) {
-              fila.addEventListener("click", function () {
-                // Obtiene el nombre de la solicitud desde el atributo data-id
-                var nombreSolicitud = fila.getAttribute("data-name");
+              // Agrega un evento de clic a cada fila
+              filasClickeables.forEach(function (fila) {
+                fila.addEventListener("click", function () {
+                  // Obtiene el nombre de la solicitud desde el atributo data-id
+                  var nombreSolicitud = fila.getAttribute("data-name");
 
-                // Redirige a la página de detalles con el nombre de la solicitud
-                window.location.href = "verSolicitud.php?nombre=" + nombreSolicitud;
+                  // Redirige a la página de detalles con el nombre de la solicitud
+                  window.location.href = "verSolicitud.php?nombre=" + nombreSolicitud;
+                });
               });
             });
-          });
-        </script>
-      </tbody>
-    </table>
-  </div>
+          </script>
+        </tbody>
+      </table>
+    </div>
+  </div><!---container--->
   <!-----------------------------Contenido principal------------------------------->
   <!-----------------------------Ventana de Notificaciones------------------------------->
   <?php

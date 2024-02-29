@@ -44,12 +44,12 @@
       //Actualización de comentarios
       $query = "UPDATE solicitudes SET comentarios = '$contenido' WHERE nombresolicitud = '$nombreSolicitud';";
       $con->query($query);
-      $con->commit();
-
+      
       // Registro en la tabla de logs
       $sql2 = "INSERT INTO logsolicitudes (id, fecha, usuario, accion, tipo, solicitud) 
              VALUES ('$siguienteIdLog' ,'$fechaHoraActual', '$usuario', 'modificación', 'comentario', '$nombreSolicitud')";
       $con->query($sql2);
+      
       $con->commit();
 
       header('Location: verSolicitud.php?nombre=' . $nombreSolicitud . '&mensaje=observacion');
@@ -62,12 +62,12 @@
       //Actualización de estado
       $query = "UPDATE solicitudes SET estado = '$estadoNuevo' WHERE nombresolicitud = '$nombreSolicitud';";
       $con->query($query);
-      $con->commit();
-
+      
       // Registro en la tabla de logs
       $sql2 = "INSERT INTO logsolicitudes (id, fecha, usuario, accion, tipo, solicitud) 
              VALUES ('$siguienteIdLog' ,'$fechaHoraActual', '$usuario', 'modificación', 'estado', '$nombreSolicitud')";
       $con->query($sql2);
+      
       $con->commit();
 
       header('Location: verSolicitud.php?nombre=' . $nombreSolicitud . '&mensaje=estado');
@@ -79,12 +79,12 @@
       //Actualización de prioridad
       $query = "UPDATE solicitudes SET prioridad = '$prioridadNueva' WHERE nombresolicitud = '$nombreSolicitud';";
       $con->query($query);
-      $con->commit();
-
+      
       // Registro en la tabla de logs
       $sql2 = "INSERT INTO logsolicitudes (id, fecha, usuario, accion, tipo, solicitud) 
              VALUES ('$siguienteIdLog' ,'$fechaHoraActual', '$usuario', 'modificación', 'prioridad', '$nombreSolicitud')";
       $con->query($sql2);
+      
       $con->commit();
 
       header('Location: verSolicitud.php?nombre=' . $nombreSolicitud . '&mensaje=prioridad');
@@ -97,12 +97,12 @@
       //Actualización de prioridad
       $query = "UPDATE archivossolicitudes SET nombreArchivo = '$nombre_archivo_nuevo', datosArchivo = '$archivo_contenido_nuevo' WHERE solicitud = '$nombreSolicitud';";
       $con->query($query);
-      $con->commit();
-
+      
       // Registro en la tabla de logs
       $sql2 = "INSERT INTO logsolicitudes (id, fecha, usuario, accion, tipo, solicitud) 
              VALUES ('$siguienteIdLog' ,'$fechaHoraActual', '$usuario', 'modificación', 'prioridad', '$nombreSolicitud')";
       $con->query($sql2);
+      
       $con->commit();
 
       header('Location: verSolicitud.php?nombre=' . $nombreSolicitud . '&mensaje=archivo');

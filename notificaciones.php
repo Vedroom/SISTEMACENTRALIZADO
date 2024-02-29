@@ -94,12 +94,19 @@
                   $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
                   //Datos del QRY
+                  /*
                   $fechaLog = $row["fecha"];
                   $usuarioLog = $row["usuario"];
                   $accionLog = $row["accion"];
                   $solicitudLog = $row["solicitud"];
                   $modifica = $row["tipo"];
-                  
+                  */
+                  $fechaLog = isset($row["fecha"]) ? $row["fecha"] : '';
+                  $usuarioLog = isset($row["usuario"]) ? $row["usuario"] : '';
+                  $accionLog = isset($row["accion"]) ? $row["accion"] : '';
+                  $solicitudLog = isset($row["solicitud"]) ? $row["solicitud"] : '';
+                  $modifica = isset($row["tipo"]) ? $row["tipo"] : '';
+
                   // Aplica la lógica de filtrado según el rol del usuario
                   if (($rol == 1) || ($rol == 2 && $usuario == $usuarioLog) || ($rol == 3 && $usuario == $usuarioLog)) {
 
@@ -119,16 +126,17 @@
                         <?php
                         //Muestra el mensaje dependiendo al rol                        
                         if ($rol == 1 || $rol == 2) {
-                          if($accionLog == "modificacion"){
-                            echo "El usuario " . '<strong>' . $usuarioLog . '</strong>' . " " . $contenido . " <strong>". $modifica . "</strong> de la solicitud" . "<strong> '" . $solicitudLog . "' </strong>";
-                          }else{
+                          if ($accionLog == "modificacion") {
+                            echo "El usuario " . '<strong>' . $usuarioLog . '</strong>' . " " . $contenido . " <strong>" . $modifica . "</strong> de la solicitud" . "<strong> '" . $solicitudLog . "' </strong>";
+                          } else {
                             echo "El usuario " . '<strong>' . $usuarioLog . '</strong>' . " " . $contenido . "<strong> '" . $solicitudLog . "' </strong> exitosamente";
-                        }
+                          }
                         } elseif ($rol == 3) {
-                          if($accionLog == "modificacion"){
-                            echo "El usuario " . '<strong>' . $usuarioLog . '</strong>' . " " . $contenido . " <strong>". $modifica . "</strong> de la solicitud" . "<strong> '" . $solicitudLog . "' </strong>";
-                          }else{                          
-                            echo $contenido . " <strong>'" . $solicitudLog . "'</strong> exitosamente";}
+                          if ($accionLog == "modificacion") {
+                            echo "El usuario " . '<strong>' . $usuarioLog . '</strong>' . " " . $contenido . " <strong>" . $modifica . "</strong> de la solicitud" . "<strong> '" . $solicitudLog . "' </strong>";
+                          } else {
+                            echo $contenido . " <strong>'" . $solicitudLog . "'</strong> exitosamente";
+                          }
                         }
                         ?>
                       </td>
@@ -164,5 +172,3 @@
   </div>
 </div>
 <!-----------------------------Panel de notificaciones-------------------------->
-
-
