@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="shortcut icon" href="img/3 PRUEBA-12.png" type="image/x-icon">
+    <link rel="shortcut icon" href="img/icono.png" type="image/x-icon">
     <!-- Favicons -->
 <link rel="apple-touch-icon" href="/docs/4.6/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
 <link rel="icon" href="/docs/4.6/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
@@ -136,6 +136,6 @@
       });
     });
   </script>
-  <!---------------------------Navegador vertical-------------------------------------------->
+  <!--------------------------Navegador vertical-------------------------------------------->
 </body>
 </html>

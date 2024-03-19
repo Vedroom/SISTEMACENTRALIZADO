@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solicitudes</title>
-  <link rel="shortcut icon" href="img/3 PRUEBA-12.png" type="image/x-icon">
+  <link rel="shortcut icon" href="img/icono.png" type="image/x-icon">
 
   <!-- Favicons -->
   <link rel="apple-touch-icon" href="/docs/4.6/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -95,6 +95,8 @@
         <!------------------------Identificacion del usuario de la sesion------------->
         <p style="color: aliceblue;">
           <?php echo $_SESSION["nombre"]; ?>
+          <img id="imgNotificaciones" src="img/notification_false.png" alt="Icono de Notificaciones" data-toggle="modal"
+            data-target="#notificacionesModal" style="cursor: pointer; width:5%;">
         </p>
       </li>
     </ul>
@@ -149,12 +151,25 @@
             </li>
             <?php
             if ($_SESSION["id_rol"] == 1) {
-              echo '<li class="nav-item">
-                                  <a class="nav-link" href="configuracion.php">
-                                      <span data-feather="users"></span>
-                                      Configuracion
-                                  </a>
-                              </li>';
+              echo '
+              <li class="nav-item">
+              <a class="nav-link" href="#" id="configuracionToogle">
+                <span data-feather="users"></span>
+                Configuracion
+              </a>
+              <ul class="list-group collapse fade" id="configuracionCollapse">
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="usuarios.php">Alta de Usuarios</a>
+                </li>
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="modificacion.php">Modificación de Usuarios</a>
+                </li>
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="bajas.php">Baja de Usuarios</a>
+                </li>
+              </ul>
+            </li>
+            ';
             }
             ?>
             <li class="nav-item boton">
@@ -174,12 +189,27 @@
     $(document).ready(function () {
       $('#ventasToggle').click(function () {
         $('#ventasCollapse').toggleClass('show');
+        $('#dashboardCollapse').removeClass('show');
+        $('#solicitudesCollapse').removeClass('show');
+        $('#configuracionCollapse').removeClass('show');
       });
       $('#dashboardToggle').click(function () {
         $('#dashboardCollapse').toggleClass('show');
+        $('#ventasCollapse').removeClass('show');
+        $('#solicitudesCollapse').removeClass('show');
+        $('#configuracionCollapse').removeClass('show');
       });
       $('#solicitudesToggle').click(function () {
         $('#solicitudesCollapse').toggleClass('show');
+        $('#ventasCollapse').removeClass('show');
+        $('#dashboardCollapse').removeClass('show');
+        $('#configuracionCollapse').removeClass('show');
+      });
+      $('#configuracionToogle').click(function () {
+        $('#configuracionCollapse').toggleClass('show');
+        $('#ventasCollapse').removeClass('show');
+        $('#dashboardCollapse').removeClass('show');
+        $('#solicitudesCollapse').removeClass('show');
       });
     });
   </script>

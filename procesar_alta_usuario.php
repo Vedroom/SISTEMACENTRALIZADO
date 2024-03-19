@@ -1,3 +1,9 @@
+<!-- Incluye SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.3/sweetalert2.min.css">
+
+<!-- Incluye SweetAlert JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.3/sweetalert2.min.js"></script>
+
 <?php
 $servername = "localhost";
 $username = "root";
@@ -22,19 +28,11 @@ $id_rol = $_POST['id_rol'];
 $sql = "INSERT INTO usuarios (usuario, contrasena, nombre, sucursal, id_rol) VALUES ('$usuario', '$contrasena','$nombre', '$sucursal', '$id_rol')";
 
 if ($conn->query($sql) === TRUE) {
-    $message = "Usuario creado";
-    echo "<script type='text/javascript'>
-        alert('$message');
-    </script>";
-    header("Location: usuarios.php");
+    header("Location: usuarios.php?mensaje=creacion");
     exit();
 } else {
     // Redirigir al usuario a una página de error
-    $message = "Usuario no creado";
-    echo "<script type='text/javascript'>
-        alert('$message');
-    </script>";
-    header("Location: usuarios.php");
+    header("Location: usuarios.php?mensaje=error");
     exit();
 }
 ?>

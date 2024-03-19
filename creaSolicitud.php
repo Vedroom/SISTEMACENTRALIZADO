@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crear solicitud</title>
-  <link rel="shortcut icon" href="img/3 PRUEBA-12.png" type="image/x-icon">
+  <link rel="shortcut icon" href="img/icono.png" type="image/x-icon">  
   <!-- Favicons -->
   <link rel="apple-touch-icon" href="/docs/4.6/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
   <link rel="icon" href="/docs/4.6/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
@@ -35,6 +35,7 @@
     crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <!----------------------Bootstrap--------------------------------------->
   <link rel="stylesheet" href="css/styledasg.css">
   <style>
@@ -61,6 +62,21 @@
 </head>
 
 <body>
+<?php 
+//MENSAJE DE ERROR SI EL NOMBRE ESTÁ DUPLICADO
+ // Recuperar el mensaje de la URL
+ $mensaje = isset($_GET['mensaje']) ? $_GET['mensaje'] : '';
+
+ // Mostrar la alerta en JavaScript
+ if($mensaje=="duplicado"){
+   echo "
+   <script>
+   // Ejemplo de alerta básica
+   Swal.fire('Error', 'El nombre de solicitud ya existe', 'error');
+   </script>";
+ }
+?>
+
   <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow navegador">
     <a href="menu.php" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"><img src="img/Massey-mavepoLOGOBLANCO.png"
         alt="" class="imglogo"></a>
@@ -82,7 +98,8 @@
         <!------------------------Identificacion del usuario de la sesion------------->
         <p style="color: aliceblue;">
           <?php echo $_SESSION["nombre"]; ?>
-
+          <img id="imgNotificaciones" src="img/notification_false.png" alt="Icono de Notificaciones" data-toggle="modal"
+            data-target="#notificacionesModal" style="cursor: pointer; width:5%;">
         </p>
       </li>
     </ul>
@@ -194,6 +211,12 @@
   <!---------------------------Navegador vertical-------------------------------------------->
   <!---------------------------Contenido principal-------------------------------------------->
   <!-----------------------------Alta de usuarios------------------------------------------>
+  
+  <?php
+  $id_rol = $_SESSION['id_rol'];
+  $usuario = $_SESSION['usuario']; include("notificaciones.php"); 
+  ?>
+
   <div class="container mt-5 formularios">
     <h2 class="mb-4">Crear solicitud</h2>
     <form id="datosSolicitud" action="procesar_alta_solicitud.php" onsubmit="return validarFormulario();" method="post"

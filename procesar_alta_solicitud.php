@@ -36,6 +36,7 @@ $ultima_id_log = $primer_id_logsolicitud + ($numero_logs - 1);
 $siguienteIdLog = 1 + $ultima_id_log;
 
 #Recuperar datos del formulario
+//DATOS PARA INTRODUCIR INFORMACIÓN
 session_start();
 $nombreSolicitud = $_POST["nombreSolicitud"];
 $descripcion = $_POST["desc"];
@@ -52,6 +53,7 @@ $responsable = $_SESSION["usuario"];
 $nombre_archivo = $con->real_escape_string($_FILES['archivo']['name']);
 $archivo_contenido = base64_encode(file_get_contents($_FILES['archivo']['tmp_name']));
 
+
 // Insertar datos en tablas respectivas
 try {
     // Iniciar transacción
@@ -67,6 +69,7 @@ try {
 
     $sql1 = "INSERT INTO solicitudes (id, nombreSolicitud, descripcion, responsable, fecha, estado, presupuesto, prioridad, agencia, depto, gerente) 
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+     
     $stmt1 = $con->prepare($sql1);
     $stmt1->bind_param("sssssssssss", $siguienteId, $nombreSolicitud, $descripcion, $responsable, $fechaHoy, $estadoInicial, $presupuesto, $prioridad, $agencia, $depto, $gerente);
     $stmt1->execute();

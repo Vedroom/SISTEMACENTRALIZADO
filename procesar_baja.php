@@ -17,9 +17,10 @@ if(isset($_GET['id'])) {
 
     // Ejecutar la consulta
     if ($conexion->query($consulta) === TRUE) {
-        header("Location: usuarios.php");
+        header("Location: bajas.php?mensaje=borrado");
         exit();
     } else {
+        header("Location: bajas.php?mensaje=error");
         echo "Error al dar de baja al usuario: " . $conexion->error;
     }
 
