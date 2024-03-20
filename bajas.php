@@ -122,6 +122,8 @@
         <!------------------------Identificacion del usuario de la sesion------------->
         <p style="color: aliceblue;">
           <?php echo $_SESSION["nombre"]; ?>
+          <img id="imgNotificaciones" src="img/notification_false.png" alt="Icono de Notificaciones" data-toggle="modal"
+            data-target="#notificacionesModal" style="cursor: pointer; width:5%;">
         </p>
       </li>
     </ul>
@@ -309,6 +311,13 @@
     }
     ?>
   </div>
+  <!-----------------------------Ventana de Notificaciones------------------------------->
+  <?php
+  $id_rol = $_SESSION['id_rol'];
+  $usuario = $_SESSION['usuario'];
+  include("notificaciones.php");
+  ?>
+  <!-----------------------------Ventana de Notificaciones------------------------------->
 </body>
 
 </html>

@@ -60,22 +60,22 @@
       box-sizing: border-box;
     }
 
-    table {
+    #tablaUsuarios {
       width: 80%;
       margin: 0 auto;
       /* Centrar la tabla horizontalmente */
       border-collapse: collapse;
     }
 
-    th,
-    td {
+    .cabeceraTabla,
+    .contenidoTabla {
       padding: 10px;
       /* Aumentar el espaciado interno */
       text-align: center;
       border: 1px solid #dddddd;
     }
 
-    th {
+    .cabeceraTabla {
       background-color: rgb(175, 30, 45);
       color: white;
     }
@@ -122,6 +122,8 @@
         <!------------------------Identificacion del usuario de la sesion------------->
         <p style="color: aliceblue;">
           <?php echo $_SESSION["nombre"]; ?>
+          <img id="imgNotificaciones" src="img/notification_false.png" alt="Icono de Notificaciones" data-toggle="modal"
+            data-target="#notificacionesModal" style="cursor: pointer; width:5%;">
         </p>
       </li>
     </ul>
@@ -245,15 +247,15 @@
   <div class="formularios">
     <h2 style="text-align: center;">Modificar Usuarios</h2>
 
-    <table>
+    <table id="tablaUsuarios">
       <tr>
-        <th>ID</th>
-        <th>Usuario</th>
-        <th>Contraseña</th>
-        <th>Nombre</th>
-        <th>Sucursal</th>
-        <th>Rol</th>
-        <th>Modificar</th>
+        <th class="cabeceraTabla">ID</th>
+        <th class="cabeceraTabla">Usuario</th>
+        <th class="cabeceraTabla">Contraseña</th>
+        <th class="cabeceraTabla">Nombre</th>
+        <th class="cabeceraTabla">Sucursal</th>
+        <th class="cabeceraTabla">Rol</th>
+        <th class="cabeceraTabla">Modificar</th>
       </tr>
       <?php
       // Establecer conexión directamente aquí
@@ -274,37 +276,42 @@
         while ($row = $result->fetch_assoc()) {
           ?>
           <tr>
-            <td>
+            <td class="contenidoTabla">
               <?php echo $row['id']; ?>
             </td>
-            <td>
+            <td class="contenidoTabla">
               <?php echo $row['usuario']; ?>
             </td>
-            <td>
+            <td class="contenidoTabla">
               <?php echo $row['contrasena']; ?>
             </td>
-            <td>
+            <td class="contenidoTabla">
               <?php echo $row['nombre']; ?>
             </td>
-            <td>
+            <td class="contenidoTabla">
               <?php echo $row['sucursal']; ?>
             </td>
-            <td>
+            <td class="contenidoTabla">
               <?php echo $row['nombre_rol']; ?>
             </td>
-            <td><a href="procesar_modificacion.php?id=<?php echo $row['id']; ?>">Editar</a></td>
+            <td class="contenidoTabla"><a href="procesar_modificacion.php?id=<?php echo $row['id']; ?>">Editar</a></td>
           </tr>
           <?php
         }
       } else {
         echo "No se encontraron usuarios.";
       }
-
       // Cerrar la conexión después de usarla
       $conexion->close();
       ?>
     </table>
   </div>
 </body>
-
+<!-----------------------------Ventana de Notificaciones------------------------------->
+<?php
+  $id_rol = $_SESSION['id_rol'];
+  $usuario = $_SESSION['usuario'];
+  include("notificaciones.php");
+  ?>
+  <!-----------------------------Ventana de Notificaciones------------------------------->
 </html>
