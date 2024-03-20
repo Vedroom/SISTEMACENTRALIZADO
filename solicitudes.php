@@ -100,13 +100,14 @@
         </p>
       </li>
     </ul>
-  </nav><!---------------------------Navegador vertical-------------------------------------------->
+  </nav>
+  <!---------------------------Navegador vertical-------------------------------------------->
   <div class="container-fluid">
     <div class="row">
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
         <div class="sidebar-sticky pt-3">
           <ul class="nav flex-column">
-            <li class="nav-item">
+            <!--<li class="nav-item">
               <a class="nav-link" href="#" id="ventasToggle">
                 <span data-feather="users"></span>
                 Ventas
@@ -134,7 +135,7 @@
                   <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>
                 </li>
               </ul>
-            </li>
+      </li>-->
             <li class="nav-item">
               <a class="nav-link" href="#" id="solicitudesToggle">
                 <span data-feather="users"></span>
@@ -287,8 +288,6 @@
                 return 'bg-default';
             }
           }
-
-
 
           //Define la clase dependiendo la prioridad asignada
           function asignarClasePrioridad($estado)
