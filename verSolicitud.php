@@ -124,17 +124,17 @@
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
         <div class="sidebar-sticky pt-3">
           <ul class="nav flex-column">
-            <li class="nav-item">
+            <!--<li class="nav-item">
               <a class="nav-link" href="#" id="ventasToggle">
                 <span data-feather="users"></span>
                 Ventas
               </a>
               <ul class="list-group collapse fade" id="ventasCollapse">
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="#">Item 1</a>
+                  <a class="btn btn-sm btn-block text-left" href="altas_tractores.php">Tractores</a>
                 </li>
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>
+                  <a class="btn btn-sm btn-block text-left" href="altas_ref.php">Refacciones</a>
                 </li>
               </ul>
             </li>
@@ -146,13 +146,13 @@
               </a>
               <ul class="list-group collapse fade" id="dashboardCollapse">
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="altas_tractores.php">Tractores</a>
+                  <a class="btn btn-sm btn-block text-left" href="dashboard_tactores.php">Tractores</a>
                 </li>
                 <li class="list-group-item" id="nivel2">
-                  <a class="btn btn-sm btn-block text-left" href="altas_ref.php">Refacciones</a>
+                  <a class="btn btn-sm btn-block text-left" href="#">Item 2</a>
                 </li>
               </ul>
-            </li>
+      </li>-->
             <li class="nav-item">
               <a class="nav-link" href="#" id="solicitudesToggle">
                 <span data-feather="users"></span>
@@ -169,12 +169,28 @@
             </li>
             <?php
             if ($_SESSION["id_rol"] == 1) {
-              echo '<li class="nav-item">
-                                  <a class="nav-link" href="configuracion.php">
-                                      <span data-feather="users"></span>
-                                      Configuracion
-                                  </a>
-                              </li>';
+              echo '
+              <li class="nav-item">
+              <a class="nav-link" href="#" id="configuracionToogle">
+                <span data-feather="users"></span>
+                Configuracion
+              </a>
+              <ul class="list-group collapse fade" id="configuracionCollapse">
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="usuarios.php">Alta de Usuarios</a>
+                </li>
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="modificacion.php">Modificación de Usuarios</a>
+                </li>
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="bajas.php">Baja de Usuarios</a>
+                </li>
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="reportesMensuales.php">Reporte Mensual</a>
+                </li>
+              </ul>
+            </li>
+            ';
             }
             ?>
             <li class="nav-item boton">
@@ -188,21 +204,37 @@
       </nav>
     </div>
   </div>
+
   <script>
     //Desplegar opciones respectivas
     $(document).ready(function () {
       $('#ventasToggle').click(function () {
         $('#ventasCollapse').toggleClass('show');
+        $('#dashboardCollapse').removeClass('show');
+        $('#solicitudesCollapse').removeClass('show');
+        $('#configuracionCollapse').removeClass('show');
       });
       $('#dashboardToggle').click(function () {
         $('#dashboardCollapse').toggleClass('show');
+        $('#ventasCollapse').removeClass('show');
+        $('#solicitudesCollapse').removeClass('show');
+        $('#configuracionCollapse').removeClass('show');
       });
       $('#solicitudesToggle').click(function () {
         $('#solicitudesCollapse').toggleClass('show');
+        $('#ventasCollapse').removeClass('show');
+        $('#dashboardCollapse').removeClass('show');
+        $('#configuracionCollapse').removeClass('show');
+      });
+      $('#configuracionToogle').click(function () {
+        $('#configuracionCollapse').toggleClass('show');
+        $('#ventasCollapse').removeClass('show');
+        $('#dashboardCollapse').removeClass('show');
+        $('#solicitudesCollapse').removeClass('show');
       });
     });
   </script>
-  <!---------------------------Navegador vertical-------------------------------------------->
+  <!--------------------------Navegador vertical-------------------------------------------->
   <!-----------------------------Contenido principal------------------------------->
 
 

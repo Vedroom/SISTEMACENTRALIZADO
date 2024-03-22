@@ -67,7 +67,7 @@
       border-collapse: collapse;
     }
 
-    th,
+    .cabeceraTabla,
     td {
       padding: 10px;
       /* Aumentar el espaciado interno */
@@ -75,7 +75,7 @@
       border: 1px solid #dddddd;
     }
 
-    th {
+    .cabeceraTabla {
       background-color: rgb(175, 30, 45);
       color: white;
     }
@@ -195,6 +195,9 @@
                 <li class="list-group-item" id="nivel2">
                   <a class="btn btn-sm btn-block text-left" href="bajas.php">Baja de Usuarios</a>
                 </li>
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="reportesMensuales.php">Reporte Mensual</a>
+                </li>
               </ul>
             </li>
             ';
@@ -248,12 +251,12 @@
     <h2 style="text-align: center;">Bajas de usuarios</h2>
     <table>
       <tr>
-        <th>ID</th>
-        <th>Nombre de Uusuarios</th>
-        <th>Nombre Completo</th>
-        <th>Sucursal</th>
-        <th>Rol</th>
-        <th>Baja</th>
+        <th class="cabeceraTabla">ID</th>
+        <th class="cabeceraTabla">Nombre de Uusuarios</th>
+        <th class="cabeceraTabla">Nombre Completo</th>
+        <th class="cabeceraTabla">Sucursal</th>
+        <th class="cabeceraTabla">Rol</th>
+        <th class="cabeceraTabla">Baja</th>
       </tr>
       <?php
       //Establecer conexion a la base de datos

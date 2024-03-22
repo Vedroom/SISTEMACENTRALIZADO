@@ -82,6 +82,8 @@
   </style>
 </head>
 
+
+
 <body>
   <?php
   session_start();
@@ -194,6 +196,9 @@
                 </li>
                 <li class="list-group-item" id="nivel2">
                   <a class="btn btn-sm btn-block text-left" href="bajas.php">Baja de Usuarios</a>
+                </li>
+                <li class="list-group-item" id="nivel2">
+                  <a class="btn btn-sm btn-block text-left" href="reportesMensuales.php">Reporte Mensual</a>
                 </li>
               </ul>
             </li>
